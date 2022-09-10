@@ -1,0 +1,90 @@
+﻿@model PIMSystemITEMCRUD.Models.Item
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@{
+    System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("sv-se", true);
+    culture.NumberFormat.NumberDecimalSeparator = ",";
+    System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+    System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+}
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-10 offset-1 col-md-4 offset-md-3">
+            <h4>Editing item</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ItemName" />
+            <input type="hidden" asp-for="ItemImageName" />
+
+            <div class="form-group mb-3">
+                <label asp-for="ItemName" class="control-label"></label>
+                <input asp-for="ItemName" class="form-control" disabled/>
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ItemPackageType" class="control-label"></label>
+                <input asp-for="ItemPackageType" class="form-control" />
+                <span asp-validation-for="ItemPackageType" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ItemPrice" class="control-label"></label>
+                <input asp-for="ItemPrice" class="form-control" disabled/>
+                <span asp-validation-for="ItemPrice" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+        <div class="col-10 offset-1 col-md-5 offset-md-0">
+            <div class="col-sm-10">
+                <img class="room-image" src="@("~/image/"+Model.ItemImageName)" asp-append-version="true" width="250px" height="250px" />
+            </div>
+            
+                <div>
+                    <input type="checkbox" id="change_image" />
+                    <label>
+                        Change the image
+                    </label>
+                </div>
+            
+            <div class="form-group" id="image_file">
+                <label asp-for="ItemImageFile" class="control-label"></label>
+                <input asp-for="ItemImageFile" accept="image/*" />
+                <span asp-validation-for="ItemImageFile" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    let checkbox = document.getElementById("change_image")
+    /*let imageName = document.getElementById("image_name")*/
+    let imageFile = document.getElementById("image_file")
+
+    imageFile.style.display = "none";
+
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            /*console.log("Checkbox is checked..");*/
+            /*imageName.style.display = "none";*/
+            imageFile.style.display = "block";
+        } else {
+            /*console.log("Checkbox is not checked..");*/
+            imageFile.style.display = "none";
+            /*imageName.style.display = "block";*/
+        }
+    });
+
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,49 @@
+﻿@model PIMSystemITEMCRUD.Models.Item
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Create</h1>
+
+<h4>ImageModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="ItemName" class="control-label"></label>
+                <input asp-for="ItemName" class="form-control" />
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ItemPackageType" class="control-label"></label>
+                <input asp-for="ItemPackageType" class="form-control" />
+                <span asp-validation-for="ItemPackageType" class="text-danger"></span>
+            </div>
+            @*<div class="form-group mb-3">
+                <label asp-for="ItemPrice" class="control-label"></label>
+                <input asp-for="ItemPrice" class="form-control" />
+                <span asp-validation-for="ItemPrice" class="text-danger"></span>
+            </div>            *@
+            <div class="form-group mb-3">
+                <label asp-for="ItemImageFile" class="control-label"></label>
+                <input asp-for="ItemImageFile" accept="image/*" />
+                <span asp-validation-for="ItemImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<PIMSystemITEMCRUD.Models.Item>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="container">
+    <form asp-controller="Item" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="itemName" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table class="table table-bordered">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-itemName="@item.ItemName">
+                        <img src="@("~/Image/"+item.ItemImageName)" asp-append-version="true" width="75px" height="75px" /><br />
+                        @item.ItemName
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
