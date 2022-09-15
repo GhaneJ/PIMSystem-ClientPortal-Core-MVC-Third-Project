@@ -10,83 +10,83 @@ using PIMSystemITEMCRUD.Models;
 
 namespace PIM_Dashboard.Controllers
 {
-    public class ItemController : Controller
+    public class ProductController : Controller
     {
         private readonly PIMDbContext _context;
 
-        public ItemController(PIMDbContext context)
+        public ProductController(PIMDbContext context)
         {
             _context = context;
         }
 
-        // GET: Item
+        // GET: Product
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Items.ToListAsync());
+              return View(await _context.Products.ToListAsync());
         }
 
-        // GET: Item/Details/5
+        // GET: Product/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Items == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
 
-            var item = await _context.Items
-                .FirstOrDefaultAsync(m => m.ItemId == id);
-            if (item == null)
+            var product = await _context.Products
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(product);
         }
 
-        // GET: Item/Create
+        // GET: Product/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Item/Create
+        // POST: Product/Create
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Item item)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductLifecycleStatus,ProductShortDescription,ProductLongDescription,ProductManager")] Product product)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(item);
+                _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(item);
+            return View(product);
         }
 
-        // GET: Item/Edit/5
+        // GET: Product/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Items == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
 
-            var item = await _context.Items.FindAsync(id);
-            if (item == null)
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            return View(item);
+            return View(product);
         }
 
-        // POST: Item/Edit/5
+        // POST: Product/Edit/5
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemId,ItemName,ItemStatus,ItemRetailPrice,ItemPackageType,ItemPackageQuantity,ItemEngineType,ItemServiceInterval,ItemBrandColor,ItemBaseColor,ItemNutritionalFacts,ItemFoodGroup,ItemSize,ItemCategory,ItemForceSend,ItemCreated")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductLifecycleStatus,ProductShortDescription,ProductLongDescription,ProductManager")] Product product)
         {
-            if (id != item.ItemId)
+            if (id != product.ProductId)
             {
                 return NotFound();
             }
@@ -95,12 +95,12 @@ namespace PIM_Dashboard.Controllers
             {
                 try
                 {
-                    _context.Update(item);
+                    _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.ItemId))
+                    if (!ProductExists(product.ProductId))
                     {
                         return NotFound();
                     }
@@ -111,56 +111,49 @@ namespace PIM_Dashboard.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(item);
+            return View(product);
         }
 
-        // GET: Item/Delete/5
+        // GET: Product/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Items == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
 
-            var item = await _context.Items
-                .FirstOrDefaultAsync(m => m.ItemId == id);
-            if (item == null)
+            var product = await _context.Products
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(product);
         }
 
-        // POST: Item/Delete/5
+        // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Items == null)
+            if (_context.Products == null)
             {
-                return Problem("Entity set 'PIMDbContext.Items'  is null.");
+                return Problem("Entity set 'PIMDbContext.Products'  is null.");
             }
-            var item = await _context.Items.FindAsync(id);
-            if (item != null)
+            var product = await _context.Products.FindAsync(id);
+            if (product != null)
             {
-                _context.Items.Remove(item);
+                _context.Products.Remove(product);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ItemExists(int id)
+        private bool ProductExists(int id)
         {
-          return _context.Items.Any(e => e.ItemId == id);
+          return _context.Products.Any(e => e.ProductId == id);
         }
-
-        [HttpPost]
-        public JsonResult IsItemNameAvailable(string itemName)
-        {
-            return Json(!_context.Items.Any(x => x.ItemName == itemName));
-        }
-
     }
 }

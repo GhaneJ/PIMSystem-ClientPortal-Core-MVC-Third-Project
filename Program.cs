@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PIMSystemITEMCRUD.Models;
+using PIMSystemITEMCRUD.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 // Must be added to communicate to Server API
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddDbContext<ItemDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<PIMDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
