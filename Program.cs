@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PIMSystemITEMCRUD.Data;
+using PIM_Dashboard.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

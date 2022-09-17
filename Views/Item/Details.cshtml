@@ -1,108 +1,68 @@
-﻿@model PIMSystemITEMCRUD.Models.Item
+﻿
+@model PIM_Dashboard.Models.Item
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Overview</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" asp-action="Edit" asp-route-itemName="@Model.ItemName">>Details</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Media</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+  </li>
+</ul>
 
-<div>
-    <h4>Item</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemStatus)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemRetailPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemRetailPrice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemPackageType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemPackageType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemPackageQuantity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemPackageQuantity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemEngineType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemEngineType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemServiceInterval)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemServiceInterval)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemBrandColor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemBrandColor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemBaseColor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemBaseColor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemNutritionalFacts)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemNutritionalFacts)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemFoodGroup)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemFoodGroup)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemSize)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemSize)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemCategory)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemCategory)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemForceSend)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemForceSend)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemCreated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemCreated)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ItemId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-10 offset-1 col-md-4 offset-md-3">
+        <h4>Item details</h4>
+        <hr />
+        <dl class="row">
+            <dt>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ItemName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ItemCreated)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ItemCreated)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ItemPackageType)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ItemPackageType)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ItemRetailPrice)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ItemRetailPrice)
+            </dd>
+        </dl>
+        
+        <div class="row">
+            <a asp-action="Delete" asp-route-itemName="@Model.ItemName">Delete</a>
+        </div>
+        
+    
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+    <div class="col-10 offset-1 col-md-5 offset-md-0">
+        <div class="col-sm-10">
+            <img class="room-image" src="@("~/Image/"+Model.ResourceFileName)" asp-append-version="true" width="250px" height="250px" />
+        </div>
+    </div>
 </div>

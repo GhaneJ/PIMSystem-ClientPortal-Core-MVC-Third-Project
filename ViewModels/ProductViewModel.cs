@@ -1,4 +1,4 @@
-﻿using PIMSystemITEMCRUD.Models;
+﻿using PIM_Dashboard.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,9 +19,19 @@ namespace PIM_Dashboard.ViewModels
         public string ProductShortDescription { get; set; }
         public string ProductLongDescription { get; set; }
         public string ProductManager { get; set; }
-
-        // One-To-One with Resource Table
-        public ICollection<Resource> Resources { get; set; }
         public ICollection<Item> Items { get; set; }
+
+        // Resources
+
+        [Column(TypeName = "nvarchar(100)")]
+        [DisplayName("Image Name")]
+        public string ResourceFileName { get; set; }
+
+        [Column(TypeName = "nvarchar(50)")]
+        public string ResourceImageTitle { get; set; }
+
+        [NotMapped]
+        [DisplayName("Upload File")]
+        public IFormFile ResourceImageFile { get; set; }
     }
 }

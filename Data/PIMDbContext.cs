@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PIMSystemITEMCRUD.Models;
+using PIM_Dashboard.Models;
 
-namespace PIMSystemITEMCRUD.Data
+namespace PIM_Dashboard.Data
 {
     public class PIMDbContext : DbContext
     {
@@ -10,7 +10,6 @@ namespace PIMSystemITEMCRUD.Data
 
         }
         public DbSet<Item> Items { get; set; }
-        public DbSet<Resource> Resources { get; set; }
         public DbSet<Product> Products { get; set; }
     }
 }

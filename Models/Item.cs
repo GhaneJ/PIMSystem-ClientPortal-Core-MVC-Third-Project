@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PIM_Dashboard.Data;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PIMSystemITEMCRUD.Models
+namespace PIM_Dashboard.Models
 {
     [Index(nameof(ItemName), IsUnique = true)]
     public class Item
@@ -14,11 +15,10 @@ namespace PIMSystemITEMCRUD.Models
 
         [Required(ErrorMessage = "This field is required.")]
         [DisplayName("Item Name")]
-        [Remote("IsItemNameAvailable", "Item", HttpMethod = "POST", ErrorMessage = "The Item already Exists")]
         [Column(TypeName = "nvarchar(50)")]
         public string ItemName { get; set; }
         public string ItemStatus { get; set; }
-        public double ItemRetailPrice { get; set; }
+        public double? ItemRetailPrice { get; set; }
         public string ItemPackageType { get; set; }
         public string ItemPackageQuantity { get; set; }
         public string ItemEngineType { get; set; }
@@ -33,7 +33,19 @@ namespace PIMSystemITEMCRUD.Models
 
         [DisplayName("Item Created")]
         public DateTime ItemCreated { get; set; }
-        public Product Product { get; set; }        
-        public ICollection<Resource> Resources { get; set; }
+
+        // Resources
+
+        [Column(TypeName = "nvarchar(100)")]
+        [DisplayName("Image Name")]
+        public string ResourceFileName { get; set; }
+
+        [Column(TypeName = "nvarchar(50)")]
+        public string ResourceImageTitle { get; set; }
+
+        [NotMapped]
+        [DisplayName("Upload File")]
+        public IFormFile ResourceImageFile { get; set; }        
+        public Product Product { get; set; }
     }
 }

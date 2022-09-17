@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "PIMSystemITEMCRUD": {
+    "PIM_Dashboard": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

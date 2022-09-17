@@ -1,4 +1,4 @@
-namespace PIMSystemITEMCRUD.Models
+namespace PIM_Dashboard.Models
 {
     public class ErrorViewModel
     {

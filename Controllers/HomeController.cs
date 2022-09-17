@@ -1,32 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PIMSystemITEMCRUD.Models;
-using System.Diagnostics;
+using PIM_Dashboard.Data;
+using PIM_Dashboard.ViewModels;
 
-namespace PIMSystemITEMCRUD.Controllers
+namespace PIM_Dashboard.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly PIMDbContext _context;
+        public HomeController(PIMDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
-
         public IActionResult Index()
         {
-            return View();
+            var tables = new Product_Item_ViewModel();
+
+            tables.Products = _context.Products.ToList();
+
+            tables.Items = _context.Items.ToList();
+
+            return View(tables);
+        }
+        public string NumberOfProducts()
+        {
+            return _context.Products.Count().ToString();
         }
 
-        public IActionResult Privacy()
+        public string NumberOfItems()
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return _context.Items.Count().ToString();
         }
     }
 }

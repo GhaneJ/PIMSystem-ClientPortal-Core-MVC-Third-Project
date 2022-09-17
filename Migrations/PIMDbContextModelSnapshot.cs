@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PIMSystemITEMCRUD.Data;
+using PIM_Dashboard.Data;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace PIM_Dashboard.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("PIMSystemITEMCRUD.Models.Item", b =>
+            modelBuilder.Entity("PIM_Dashboard.Models.Item", b =>
                 {
                     b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd()
@@ -64,7 +64,7 @@ namespace PIM_Dashboard.Migrations
                     b.Property<string>("ItemPackageType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ItemRetailPrice")
+                    b.Property<double?>("ItemRetailPrice")
                         .HasColumnType("float");
 
                     b.Property<string>("ItemServiceInterval")
@@ -79,6 +79,12 @@ namespace PIM_Dashboard.Migrations
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ResourceFileName")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ResourceImageTitle")
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("ItemId");
 
                     b.HasIndex("ItemName")
@@ -89,7 +95,7 @@ namespace PIM_Dashboard.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("PIMSystemITEMCRUD.Models.Product", b =>
+            modelBuilder.Entity("PIM_Dashboard.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -113,6 +119,12 @@ namespace PIM_Dashboard.Migrations
                     b.Property<string>("ProductShortDescription")
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("ResourceFileName")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ResourceImageTitle")
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("ProductId");
 
                     b.HasIndex("ProductName")
@@ -121,69 +133,18 @@ namespace PIM_Dashboard.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("PIMSystemITEMCRUD.Models.Resource", b =>
+            modelBuilder.Entity("PIM_Dashboard.Models.Item", b =>
                 {
-                    b.Property<int>("ResourceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResourceId"), 1L, 1);
-
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ResourceFileName")
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ResourceImageTitle")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("ResourceId");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Resources");
-                });
-
-            modelBuilder.Entity("PIMSystemITEMCRUD.Models.Item", b =>
-                {
-                    b.HasOne("PIMSystemITEMCRUD.Models.Product", "Product")
+                    b.HasOne("PIM_Dashboard.Models.Product", "Product")
                         .WithMany("Items")
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("PIMSystemITEMCRUD.Models.Resource", b =>
-                {
-                    b.HasOne("PIMSystemITEMCRUD.Models.Item", "Item")
-                        .WithMany("Resources")
-                        .HasForeignKey("ItemId");
-
-                    b.HasOne("PIMSystemITEMCRUD.Models.Product", "Product")
-                        .WithMany("Resources")
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Item");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("PIMSystemITEMCRUD.Models.Item", b =>
-                {
-                    b.Navigation("Resources");
-                });
-
-            modelBuilder.Entity("PIMSystemITEMCRUD.Models.Product", b =>
+            modelBuilder.Entity("PIM_Dashboard.Models.Product", b =>
                 {
                     b.Navigation("Items");
-
-                    b.Navigation("Resources");
                 });
 #pragma warning restore 612, 618
         }
