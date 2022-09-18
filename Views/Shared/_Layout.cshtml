@@ -10,13 +10,13 @@
     <!-- Google fonts - Poppins -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
     <!-- Choices CSS-->
-    <link rel="stylesheet" href="~/vendor/choices.js/public/assets/styles/choices.min.css">
+    <link rel="stylesheet" href="/vendor/choices.js/public/assets/styles/choices.min.css">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="~/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="~/css/custom.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="~/icons/favicon.ico">
+    <link rel="shortcut icon" href="/icons/favicon.ico">
     <!-- Tweaks for older IEs-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -148,10 +148,16 @@
                             </li>
                             <!-- Languages dropdown    -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white dropdown-toggle d-flex align-items-center" id="languages" href="#" data-bs-toggle="dropdown" aria-expanded="false"><img class="me-2" src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                                <a class="nav-link text-white dropdown-toggle d-flex align-items-center" id="languages" href="#" data-bs-toggle="dropdown" aria-expanded="false"><span class="d-none d-sm-inline-block">Entities</span></a>
                                 <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="languages">
-                                    <li><a class="dropdown-item" rel="nofollow" href="#"> <img class="me-2" src="img/flags/16/DE.png" alt="English"><span class="text-xs text-gray-700">German</span></a></li>
-                                    <li><a class="dropdown-item" rel="nofollow" href="#"> <img class="me-2" src="img/flags/16/FR.png" alt="English"><span class="text-xs text-gray-700">French                                         </span></a></li>
+                                    <li>
+                                        <a class="dropdown-item" rel="nofollow" href="#">
+                                            <img class="me-2" src="icons/flags/16/DE.png" alt="English"><span class="text-xs text-gray-700">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Create">Items</a>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li><a class="dropdown-item" rel="nofollow" href="#"> <img class="me-2" src="icons/flags/16/FR.png" alt="English"><span class="text-xs text-gray-700">Item</span></a></li>
                                 </ul>
                             </li>
                             <!-- Logout    -->
@@ -168,6 +174,7 @@
                 </div>
             </nav>
         </header>
+
         <div class="page-content d-flex align-items-stretch">
             <!-- Side Navbar -->
             <nav class="side-navbar z-index-40">
@@ -267,11 +274,13 @@
                         <h2 class="mb-0 p-1">Dashboard</h2>
                     </div>
                 </header>
+
                 <div class="container">
                     <main role="main" class="pb-3">
                         @RenderBody()
                     </main>
                 </div>
+
                 <!-- Page Footer-->
                 <footer class="position-absolute bottom-0 bg-darkBlue text-white text-center py-3 w-100 text-xs" id="footer">
                     <div class="container-fluid">
@@ -290,11 +299,11 @@
         </div>
     </div>
     <!-- JavaScript files-->
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="vendor/just-validate/js/just-validate.min.js"></script>
-    <script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
-    <script src="js/charts-home.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/just-validate/js/just-validate.min.js"></script>
+    <script src="/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="/js/charts-home.js"></script>
     <!-- Main File-->
     <script src="js/front.js"></script>
     <script>
@@ -325,9 +334,6 @@
     </script>
     <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required:false)
 </body>
 </html>

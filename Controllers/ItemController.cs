@@ -46,13 +46,13 @@ namespace PIM_Dashboard.Controllers
                 return NotFound();
             }
 
-            var clickedItem = GetSelectedItemInfo(itemName);
+            var clickedItem = GetSelectedItemInfoAsync(itemName);
 
             var itemObject = await _context.Items
                 .FirstOrDefaultAsync(m => m.ItemName == itemName);
             if (clickedItem != null)
             {
-                itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
+                //itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
             }
             
             if (itemObject == null)
@@ -62,7 +62,6 @@ namespace PIM_Dashboard.Controllers
 
             return View(itemObject);
         }
-
         
 
         // GET: Item/Create
@@ -123,10 +122,10 @@ namespace PIM_Dashboard.Controllers
             ItemViewModel model = new ItemViewModel();
             var item = _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefault();
             //var item = await _context.Items.FindAsync(itemName);
-            var clickedItem = GetSelectedItemInfo(itemName);
+            var clickedItem = GetSelectedItemInfoAsync(itemName);
             if (item.ItemRetailPrice == 0)
             {
-                item.ItemRetailPrice = clickedItem.ItemRetailPrice;
+                //item.ItemRetailPrice = clickedItem.ItemRetailPrice;
             }
 
             if (item == null)
@@ -215,7 +214,8 @@ namespace PIM_Dashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string itemName)
         {
-            var itemModel = await _context.Items.FindAsync(itemName);
+            //var itemModel = await _context.Items.FindAsync(itemName);
+            var itemModel = _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefault();
 
             //delete image from wwwroot/image
             try
@@ -224,12 +224,16 @@ namespace PIM_Dashboard.Controllers
                 if (System.IO.File.Exists(imagePath))
                     System.IO.File.Delete(imagePath);
                 //delete the record
-                _context.Items.Remove(itemModel);
-                await _context.SaveChangesAsync();
+                
             }
             catch (Exception e)
             {
                 Console.WriteLine($"{e.Message}");
+            }
+            finally
+            {
+                _context.Items.Remove(itemModel);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index));
@@ -255,10 +259,10 @@ namespace PIM_Dashboard.Controllers
             }
         }
 
-        public ItemViewModel GetSelectedItemInfo(string itemName)
+        public async Task<ItemViewModel> GetSelectedItemInfoAsync(string itemName)
         {
             IList<ItemViewModel> item = new List<ItemViewModel>();
-            HttpResponseMessage getData = new HttpResponseMessage();
+            HttpResponseMessage response = new HttpResponseMessage();
             ItemViewModel clickedItem = null;
             using (var client = new HttpClient())
             {
@@ -269,25 +273,15 @@ namespace PIM_Dashboard.Controllers
 
                 try
                 {
-                    getData = client.GetAsync("Item").GetAwaiter().GetResult();
-                    if (getData == null) return clickedItem;
+                    response = await client.GetAsync("Item");
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception)
+                catch (HttpRequestException e)
                 {
-                    return clickedItem;
-                }
-
-
-                if (getData.IsSuccessStatusCode)
-                {
-                    string results = getData.Content.ReadAsStringAsync().Result;
-                    item = JsonConvert.DeserializeObject<List<ItemViewModel>>(results);
-                    clickedItem = item.Where(x => x.ItemName == itemName).FirstOrDefault();
-                }
-                else
-                {
-                    Console.WriteLine("Error calling Web API");
-                }
+                    Console.WriteLine("\nException Caught!");
+                    Console.WriteLine("Message :{0} ", e.Message);
+                }                
                 ViewData.Model = item;
             }
 
