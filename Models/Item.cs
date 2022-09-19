@@ -47,5 +47,11 @@ namespace PIM_Dashboard.Models
         [DisplayName("Upload File")]
         public IFormFile ResourceImageFile { get; set; }        
         public Product Product { get; set; }
+        public enum ItemType
+        {
+            FoodTruck,
+            Consumable,
+            Wearable
+        }
     }
 }

@@ -23,7 +23,10 @@ namespace PIM_Dashboard.Controllers
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
-        }
+        }        
+        
+        //ValueTask<T> is a value type, not a reference type and because of this
+        //it will have less memory and provides better performance as compared to Task<T>.
 
         // GET: Item
         public async Task<IActionResult> Index(string itemName)
@@ -41,25 +44,53 @@ namespace PIM_Dashboard.Controllers
         // GET: Item/Details/5
         public async Task<IActionResult> Details(string itemName)
         {
+            ItemViewModel clickedItem = new ItemViewModel();
+            Item item = new Item();
+            Task<string> apiResponse = null;
             if (itemName == null || _context.Items == null)
             {
                 return NotFound();
             }
 
-            var clickedItem = GetSelectedItemInfoAsync(itemName);
-
-            var itemObject = await _context.Items
+            Item itemObject = await _context.Items
                 .FirstOrDefaultAsync(m => m.ItemName == itemName);
-            if (clickedItem != null)
-            {
-                //itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
-            }
-            
-            if (itemObject == null)
-            {
-                return NotFound();
-            }
 
+            // If the client item lacks the price, get the price from server API
+
+            if (itemObject.ItemRetailPrice == null)
+            {
+                apiResponse = GetSelectedItemInfo(itemName);
+                if (!string.IsNullOrEmpty(apiResponse.Result))
+                {
+                    try
+                    {
+                        if (apiResponse.Result.Contains(itemName))
+                        {
+                            clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
+                            if (clickedItem.ItemName != null)
+                            {
+                                itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
+
+                                await Edit(itemName, itemObject.ItemRetailPrice, itemObject);
+
+                                if (itemObject == null)
+                                {
+                                    return NotFound();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Report that the item does not exist in the Server database
+                        }
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        Console.WriteLine("\nException Caught!");
+                        Console.WriteLine("Message :{0} ", e.Message);
+                    }
+                }
+            }
             return View(itemObject);
         }
         
@@ -81,18 +112,17 @@ namespace PIM_Dashboard.Controllers
             if (DoesItemNameExist == true)
             {
                 ModelState.AddModelError("ItemName", "ItemName already exists");
-            }
+            }            
 
             ItemViewModel model = new ItemViewModel();
             if (ModelState.IsValid)
             {
+                model.ItemName = item.ItemName;
+                item.ItemCreated = DateTime.Now;
+                model.ItemPackageType = item.ItemPackageType;
+
                 if (item.ResourceImageFile != null)
                 {
-                    model.ItemName = item.ItemName;
-                    item.ItemCreated = DateTime.Now;
-                    model.ItemPackageType = item.ItemPackageType;
-                    model.ItemRetailPrice = item.ItemRetailPrice;
-
                     //Save image to wwwroot/Images
                     string wwwRootPath = _hostEnvironment.WebRootPath;
                     string fileName = Path.GetFileNameWithoutExtension(item.ResourceImageFile.FileName);
@@ -113,7 +143,7 @@ namespace PIM_Dashboard.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(string itemName, decimal itemPrice)
+        public IActionResult Edit(string itemName)
         {
             if (itemName == null)
             {
@@ -121,16 +151,21 @@ namespace PIM_Dashboard.Controllers
             }
             ItemViewModel model = new ItemViewModel();
             var item = _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefault();
-            //var item = await _context.Items.FindAsync(itemName);
-            var clickedItem = GetSelectedItemInfoAsync(itemName);
-            if (item.ItemRetailPrice == 0)
-            {
-                //item.ItemRetailPrice = clickedItem.ItemRetailPrice;
-            }
-
             if (item == null)
             {
                 return NotFound();
+            }
+            var apiResponse = GetSelectedItemInfo(itemName);
+            if (apiResponse.Result != null)
+            {
+                if (apiResponse.Result.Contains(itemName))
+                {
+                    ItemViewModel clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
+                    if (item.ItemRetailPrice == null)
+                    {
+                        item.ItemRetailPrice = clickedItem.ItemRetailPrice;
+                    }
+                }
             }
             return View(item);
         }
@@ -138,7 +173,7 @@ namespace PIM_Dashboard.Controllers
         // POST: Item/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string itemName, Item item)
+        public async Task<IActionResult> Edit(string itemName, double? itemRetailPrice, Item item)
         {
             if (itemName != item.ItemName)
             {
@@ -148,10 +183,10 @@ namespace PIM_Dashboard.Controllers
             ItemViewModel model = new ItemViewModel();
 
             model.ItemName = item.ItemName;
-            item.ItemCreated = DateTime.Now;
+            model.ItemCreated = item.ItemCreated;
             model.ResourceFileName = item.ResourceFileName;
             model.ResourceImageTitle = item.ResourceImageTitle;
-            model.ItemRetailPrice = item.ItemRetailPrice;
+            model.ItemRetailPrice = itemRetailPrice;
             model.ResourceImageFile = item.ResourceImageFile;
 
             if (ModelState.IsValid)
@@ -214,8 +249,8 @@ namespace PIM_Dashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string itemName)
         {
-            //var itemModel = await _context.Items.FindAsync(itemName);
-            var itemModel = _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefault();
+            var itemModel = await _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefaultAsync();
+            
 
             //delete image from wwwroot/image
             try
@@ -223,18 +258,15 @@ namespace PIM_Dashboard.Controllers
                 var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", itemModel.ResourceFileName);
                 if (System.IO.File.Exists(imagePath))
                     System.IO.File.Delete(imagePath);
-                //delete the record
-                
             }
             catch (Exception e)
             {
                 Console.WriteLine($"{e.Message}");
             }
-            finally
-            {
+            
+                //delete the record
                 _context.Items.Remove(itemModel);
                 await _context.SaveChangesAsync();
-            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -244,48 +276,48 @@ namespace PIM_Dashboard.Controllers
             return _context.Items.Any(e => e.ItemName == itemName);
         }
 
-        [HttpPost]
-        public JsonResult IsItemNameAvailable(string itemName, int? id)
+        public async Task<string> GetSelectedItemInfo(string itemName)
         {
-            var validateName = _context.Items.FirstOrDefault
-                                (x => x.ItemName == itemName && x.ItemId != id);
-            if (validateName != null)
-            {
-                return Json(false);
-            }
-            else
-            {
-                return Json(true);
-            }
-        }
-
-        public async Task<ItemViewModel> GetSelectedItemInfoAsync(string itemName)
-        {
-            IList<ItemViewModel> item = new List<ItemViewModel>();
             HttpResponseMessage response = new HttpResponseMessage();
-            ItemViewModel clickedItem = null;
+            string responseBody = null;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseURL);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-
                 try
                 {
                     response = await client.GetAsync("Item");
                     response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
+                    responseBody = await response.Content.ReadAsStringAsync();
                 }
                 catch (HttpRequestException e)
                 {
                     Console.WriteLine("\nException Caught!");
                     Console.WriteLine("Message :{0} ", e.Message);
                 }                
-                ViewData.Model = item;
+                //ViewData.Model = item;
             }
+            return responseBody;
+        }
 
+        public ItemViewModel DeserializeAPIResponseToEntity(string response, string itemName)
+        {
+            List<ItemViewModel> items = new List<ItemViewModel>();
+            ItemViewModel clickedItem = null;
+            if (response != null)
+            {
+                items = JsonConvert.DeserializeObject<List<ItemViewModel>>(response);
+                clickedItem = items.Where(x => x.ItemName == itemName).FirstOrDefault();
+            }            
             return clickedItem;
+        }
+
+        public IActionResult CreateFoodTruckitemPartial()
+        {
+            List<Item> items = new List<Item>();
+            return PartialView("_CreateFoodTruckView",  items);
         }
     }
 }

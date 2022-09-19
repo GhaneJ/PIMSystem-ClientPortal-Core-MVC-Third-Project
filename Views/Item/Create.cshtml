@@ -4,104 +4,186 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Item</h4>
+<h1>Create a new Item</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemName" class="control-label"></label>
-                <input asp-for="ItemName" class="form-control" />
-                <span asp-validation-for="ItemName" class="text-danger"></span>
+<nav>
+    <div class="nav nav-tabs mt-5" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-foodtruck-tab" data-bs-toggle="tab" data-bs-target="#nav-foodtruck" type="button" role="tab" aria-controls="nav-foodtruck" aria-selected="true">Food Truck Item</button>
+        <button class="nav-link" id="nav-consumable-tab" data-bs-toggle="tab" data-bs-target="#nav-consumable" type="button" role="tab" aria-controls="nav-consumable" aria-selected="false">Consumable Item</button>
+        <button class="nav-link" id="nav-wearable-tab" data-bs-toggle="tab" data-bs-target="#nav-wearable" type="button" role="tab" aria-controls="nav-wearable" aria-selected="false">Wearable Item</button>
+    </div>
+</nav>
+
+                                            @*Food Truck Tab Items Create page*@
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-foodtruck" role="tabpanel" aria-labelledby="nav-foodtruck-tab">
+        <div class="row">
+            <div class="mt-5 col-md-4">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemName" class="control-label"></label>
+                        <input asp-for="ItemName" class="form-control" />
+                        <span asp-validation-for="ItemName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemStatus" class="control-label"></label>
+                        <input asp-for="ItemStatus" class="form-control" />
+                        <span asp-validation-for="ItemStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemEngineType" class="control-label"></label>
+                        <input asp-for="ItemEngineType" class="form-control" />
+                        <span asp-validation-for="ItemEngineType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemServiceInterval" class="control-label"></label>
+                        <input asp-for="ItemServiceInterval" class="form-control" />
+                        <span asp-validation-for="ItemServiceInterval" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemForceSend" class="control-label"></label>
+                        <input asp-for="ItemForceSend" class="form-control" />
+                        <span asp-validation-for="ItemForceSend" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ResourceImageFile" class="control-label"></label>
+                        <input asp-for="ResourceImageFile" accept="image/*" />
+                        <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemStatus" class="control-label"></label>
-                <input asp-for="ItemStatus" class="form-control" />
-                <span asp-validation-for="ItemStatus" class="text-danger"></span>
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+                                            @*Consumable Tab Items Create page*@
+
+    
+    <div class="tab-pane fade" id="nav-consumable" role="tabpanel" aria-labelledby="nav-consumable-tab">
+        <div class="row">
+            <div class="mt-5 col-md-4">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemName" class="control-label"></label>
+                        <input asp-for="ItemName" class="form-control" />
+                        <span asp-validation-for="ItemName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemStatus" class="control-label"></label>
+                        <input asp-for="ItemStatus" class="form-control" />
+                        <span asp-validation-for="ItemStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemPackageType" class="control-label"></label>
+                        <input asp-for="ItemPackageType" class="form-control" />
+                        <span asp-validation-for="ItemPackageType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemPackageQuantity" class="control-label"></label>
+                        <input asp-for="ItemPackageQuantity" class="form-control" />
+                        <span asp-validation-for="ItemPackageQuantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemNutritionalFacts" class="control-label"></label>
+                        <input asp-for="ItemNutritionalFacts" class="form-control" />
+                        <span asp-validation-for="ItemNutritionalFacts" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemFoodGroup" class="control-label"></label>
+                        <input asp-for="ItemFoodGroup" class="form-control" />
+                        <span asp-validation-for="ItemFoodGroup" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemForceSend" class="control-label"></label>
+                        <input asp-for="ItemForceSend" class="form-control" />
+                        <span asp-validation-for="ItemForceSend" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ResourceImageFile" class="control-label"></label>
+                        <input asp-for="ResourceImageFile" accept="image/*" />
+                        <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemRetailPrice" class="control-label"></label>
-                <input asp-for="ItemRetailPrice" class="form-control" />
-                <span asp-validation-for="ItemRetailPrice" class="text-danger"></span>
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+                                            @*Wearable Tab Items Create page*@
+
+    
+    <div class="tab-pane fade" id="nav-wearable" role="tabpanel" aria-labelledby="nav-wearable-tab">
+        <div class="row">
+            <div class="mt-5 col-md-4">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemName" class="control-label"></label>
+                        <input asp-for="ItemName" class="form-control" />
+                        <span asp-validation-for="ItemName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemStatus" class="control-label"></label>
+                        <input asp-for="ItemStatus" class="form-control" />
+                        <span asp-validation-for="ItemStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemBrandColor" class="control-label"></label>
+                        <input asp-for="ItemBrandColor" class="form-control" />
+                        <span asp-validation-for="ItemBrandColor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemBaseColor" class="control-label"></label>
+                        <input asp-for="ItemBaseColor" class="form-control" />
+                        <span asp-validation-for="ItemBaseColor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemSize" class="control-label"></label>
+                        <input asp-for="ItemSize" class="form-control" />
+                        <span asp-validation-for="ItemSize" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemCategory" class="control-label"></label>
+                        <input asp-for="ItemCategory" class="form-control" />
+                        <span asp-validation-for="ItemCategory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ItemForceSend" class="control-label"></label>
+                        <input asp-for="ItemForceSend" class="form-control" />
+                        <span asp-validation-for="ItemForceSend" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ResourceImageFile" class="control-label"></label>
+                        <input asp-for="ResourceImageFile" accept="image/*" />
+                        <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemPackageType" class="control-label"></label>
-                <input asp-for="ItemPackageType" class="form-control" />
-                <span asp-validation-for="ItemPackageType" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemPackageQuantity" class="control-label"></label>
-                <input asp-for="ItemPackageQuantity" class="form-control" />
-                <span asp-validation-for="ItemPackageQuantity" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemEngineType" class="control-label"></label>
-                <input asp-for="ItemEngineType" class="form-control" />
-                <span asp-validation-for="ItemEngineType" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemServiceInterval" class="control-label"></label>
-                <input asp-for="ItemServiceInterval" class="form-control" />
-                <span asp-validation-for="ItemServiceInterval" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemBrandColor" class="control-label"></label>
-                <input asp-for="ItemBrandColor" class="form-control" />
-                <span asp-validation-for="ItemBrandColor" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemBaseColor" class="control-label"></label>
-                <input asp-for="ItemBaseColor" class="form-control" />
-                <span asp-validation-for="ItemBaseColor" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemNutritionalFacts" class="control-label"></label>
-                <input asp-for="ItemNutritionalFacts" class="form-control" />
-                <span asp-validation-for="ItemNutritionalFacts" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemFoodGroup" class="control-label"></label>
-                <input asp-for="ItemFoodGroup" class="form-control" />
-                <span asp-validation-for="ItemFoodGroup" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemSize" class="control-label"></label>
-                <input asp-for="ItemSize" class="form-control" />
-                <span asp-validation-for="ItemSize" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemCategory" class="control-label"></label>
-                <input asp-for="ItemCategory" class="form-control" />
-                <span asp-validation-for="ItemCategory" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemForceSend" class="control-label"></label>
-                <input asp-for="ItemForceSend" class="form-control" />
-                <span asp-validation-for="ItemForceSend" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ItemCreated" class="control-label"></label>
-                <input asp-for="ItemCreated" class="form-control" />
-                <span asp-validation-for="ItemCreated" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ResourceImageFile" class="control-label"></label>
-                <input asp-for="ResourceImageFile" accept="image/*" />
-                <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
 
 @section Scripts {
     @{
