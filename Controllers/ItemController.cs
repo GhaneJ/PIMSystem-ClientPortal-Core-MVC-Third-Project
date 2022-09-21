@@ -23,8 +23,8 @@ namespace PIM_Dashboard.Controllers
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
-        }        
-        
+        }
+
         //ValueTask<T> is a value type, not a reference type and because of this
         //it will have less memory and provides better performance as compared to Task<T>.
 
@@ -52,48 +52,51 @@ namespace PIM_Dashboard.Controllers
                 return NotFound();
             }
 
-            Item itemObject = await _context.Items
-                .FirstOrDefaultAsync(m => m.ItemName == itemName);
+            Item itemObject = await _context.Items.Where(m => m.ItemName == itemName)
+                .FirstOrDefaultAsync();
 
-            // If the client item lacks the price, get the price from server API
+            if (itemObject.ItemStatus == "Enrichment Complete")
+            {
+                //If the client item is enriched, get the price from server API
 
             if (itemObject.ItemRetailPrice == null)
-            {
-                apiResponse = GetSelectedItemInfo(itemName);
-                if (!string.IsNullOrEmpty(apiResponse.Result))
                 {
-                    try
+                    apiResponse = GetSelectedItemInfo(itemName);
+                    if (!string.IsNullOrEmpty(apiResponse.Result))
                     {
-                        if (apiResponse.Result.Contains(itemName))
+                        try
                         {
-                            clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
-                            if (clickedItem.ItemName != null)
+                            if (apiResponse.Result.Contains(itemName))
                             {
-                                itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
-
-                                await Edit(itemName, itemObject.ItemRetailPrice, itemObject);
-
-                                if (itemObject == null)
+                                clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
+                                if (clickedItem.ItemName != null)
                                 {
-                                    return NotFound();
+                                    itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
+
+                                    await Edit(itemName, itemObject.ItemRetailPrice, itemObject);
+
+                                    if (itemObject == null)
+                                    {
+                                        return NotFound();
+                                    }
                                 }
                             }
+                            else
+                            {
+                                // Report that the item does not exist in the Server database
+                            }
                         }
-                        else
+                        catch (NullReferenceException e)
                         {
-                            // Report that the item does not exist in the Server database
+                            Console.WriteLine("\nException Caught!");
+                            Console.WriteLine("Message :{0} ", e.Message);
                         }
-                    }
-                    catch (NullReferenceException e)
-                    {
-                        Console.WriteLine("\nException Caught!");
-                        Console.WriteLine("Message :{0} ", e.Message);
                     }
                 }
             }
             return View(itemObject);
         }
-        
+
 
         // GET: Item/Create
         public IActionResult Create()
@@ -112,14 +115,29 @@ namespace PIM_Dashboard.Controllers
             if (DoesItemNameExist == true)
             {
                 ModelState.AddModelError("ItemName", "ItemName already exists");
-            }            
+            }
 
             ItemViewModel model = new ItemViewModel();
+
+            //if (item.ItemPackageType == "Truck")
+            //{
+            //    ModelState.Remove("ItemBaseColor");
+            //    ModelState.Remove("ItemBrandColor");
+            //    ModelState.Remove("ItemCategory");
+            //    ModelState.Remove("ItemFoodGroup");
+            //    ModelState.Remove("ItemNutritionalFacts");
+            //    ModelState.Remove("ItemPackageQuantity");
+            //    ModelState.Remove("ItemSize");
+            //}
+
             if (ModelState.IsValid)
             {
                 model.ItemName = item.ItemName;
                 item.ItemCreated = DateTime.Now;
-                model.ItemPackageType = item.ItemPackageType;
+                model.ItemServiceInterval = item.ItemServiceInterval;
+                model.ItemEngineType = item.ItemEngineType;
+                model.ItemStatus = item.ItemStatus;
+                model.ItemForceSend = item.ItemForceSend;
 
                 if (item.ResourceImageFile != null)
                 {
@@ -137,6 +155,7 @@ namespace PIM_Dashboard.Controllers
 
                 _context.Add(item);
                 await _context.SaveChangesAsync();
+                TempData["Success"] = "The item was created";
                 return RedirectToAction(nameof(Index));
             }
             return View(item);
@@ -155,6 +174,7 @@ namespace PIM_Dashboard.Controllers
             {
                 return NotFound();
             }
+
             var apiResponse = GetSelectedItemInfo(itemName);
             if (apiResponse.Result != null)
             {
@@ -209,6 +229,7 @@ namespace PIM_Dashboard.Controllers
 
                     _context.Update(item);
                     await _context.SaveChangesAsync();
+                    TempData["Success"] = "The item was updated";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -267,6 +288,7 @@ namespace PIM_Dashboard.Controllers
                 //delete the record
                 _context.Items.Remove(itemModel);
                 await _context.SaveChangesAsync();
+            TempData["Success"] = "The item was deleted";
 
             return RedirectToAction(nameof(Index));
         }

@@ -12692,21 +12692,21 @@ nav.side-navbar.shrinked .sidebar-header .title {
 .sidebar-item.active > .sidebar-link {
   color: #fff;
   border-left: 4px solid #1c669c;
-  background: #2b90d9;
+  background: #28a745;
 }
 
 .sidebar-item.active > .sidebar-link:hover {
-  background: #2b90d9;
+  background: #28a745;
 }
 
 .sidebar-item li.active > .sidebar-link {
   color: #fff;
   border-left: 4px solid #1c669c;
-  background: #419bdd;
+  background: #28a745;
 }
 
 .sidebar-item .collapse {
-  background: #EEF5F9;
+  background: #28a745;
 }
 
 .sidebar-link {

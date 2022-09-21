@@ -17,6 +17,8 @@ namespace PIM_Dashboard.Models
         [DisplayName("Item Name")]
         [Column(TypeName = "nvarchar(50)")]
         public string ItemName { get; set; }
+
+        [Required(ErrorMessage = "This field is required.")]
         public string ItemStatus { get; set; }
         public double? ItemRetailPrice { get; set; }
         public string ItemPackageType { get; set; }
@@ -46,12 +48,6 @@ namespace PIM_Dashboard.Models
         [NotMapped]
         [DisplayName("Upload File")]
         public IFormFile ResourceImageFile { get; set; }        
-        public Product Product { get; set; }
-        public enum ItemType
-        {
-            FoodTruck,
-            Consumable,
-            Wearable
-        }
+        public Product Product { get; set; }        
     }
 }

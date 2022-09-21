@@ -15,6 +15,8 @@ namespace PIM_Dashboard.ViewModels
         [DisplayName("Item Name")]
         [Column(TypeName = "nvarchar(50)")]
         public string ItemName { get; set; }
+
+        [Required(ErrorMessage = "This field is required.")]
         public string ItemStatus { get; set; }
         public double? ItemRetailPrice { get; set; }
         public string ItemPackageType { get; set; }

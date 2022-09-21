@@ -21,34 +21,57 @@
 
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-10 offset-1 col-md-4 offset-md-3">
-                <h4>Item details</h4>
-                <hr />
-                <dl class="row">
+                
+                <dl class="row mt-5">
                     <dt>
-                        @Html.DisplayNameFor(model => model.ItemName)
+                        Item Name
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.ItemName)
+                        @Model.ItemName
                     </dd>
                     <dt>
-                        @Html.DisplayNameFor(model => model.ItemCreated)
+                        Date of Creation
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.ItemCreated)
+                        @Model.ItemCreated
                     </dd>
                     <dt>
-                        @Html.DisplayNameFor(model => model.ItemPackageType)
+                        Item Status
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.ItemPackageType)
+                        @Model.ItemStatus
                     </dd>
                     <dt>
-                        @Html.DisplayNameFor(model => model.ItemRetailPrice)
+                        Item Type
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.ItemRetailPrice)
+                        @Model.ItemPackageType
+                    </dd>
+                    <dt>
+                        Engine Type
+                    </dt>
+                    <dd>
+                        @Model.ItemEngineType
+                    </dd>
+                    <dt>
+                        Service Interval
+                    </dt>
+                    <dd>
+                        @Model.ItemServiceInterval
+                    </dd>
+                    <dt>
+                        Item Retail Price
+                    </dt>
+                    <dd>
+                        @Model.ItemRetailPrice
+                    </dd>
+                    <dt>
+                        Force Send Status
+                    </dt>
+                    <dd>
+                        @Model.ItemForceSend
                     </dd>
                 </dl>
                 <div class="row">
@@ -61,8 +84,8 @@
                 </div>
             </div>
             <div class="col-10 offset-1 col-md-5 offset-md-0">
-                <div class="col-sm-10">
-                    <img class="room-image" src="@("~/Image/"+Model.ResourceFileName)" asp-append-version="true" width="320px" height="240px" />
+                <div class="col-sm-10 mt-5">
+                    <img class="room-image" src="@("~/Image/"+Model.ResourceFileName)" asp-append-version="true" width="250px" height="250px" />
                 </div>
             </div>
         </div>

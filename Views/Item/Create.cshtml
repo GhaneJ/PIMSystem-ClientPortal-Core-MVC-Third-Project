@@ -7,14 +7,14 @@
 <h1>Create a new Item</h1>
 <hr />
 <nav>
-    <div class="nav nav-tabs mt-5" id="nav-tab" role="tablist">
+    <div class="nav nav-pills mt-5" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-foodtruck-tab" data-bs-toggle="tab" data-bs-target="#nav-foodtruck" type="button" role="tab" aria-controls="nav-foodtruck" aria-selected="true">Food Truck Item</button>
         <button class="nav-link" id="nav-consumable-tab" data-bs-toggle="tab" data-bs-target="#nav-consumable" type="button" role="tab" aria-controls="nav-consumable" aria-selected="false">Consumable Item</button>
         <button class="nav-link" id="nav-wearable-tab" data-bs-toggle="tab" data-bs-target="#nav-wearable" type="button" role="tab" aria-controls="nav-wearable" aria-selected="false">Wearable Item</button>
     </div>
 </nav>
 
-                                            @*Food Truck Tab Items Create page*@
+@*Food Truck Tab Items Create page*@
 
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-foodtruck" role="tabpanel" aria-labelledby="nav-foodtruck-tab">
@@ -22,19 +22,41 @@
             <div class="mt-5 col-md-4">
                 <form asp-action="Create" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group mb-3">
+                    <div class="form-group" hidden>
+                        <label asp-for="ItemPackageType" class="control-label"></label>
+                        <input asp-for="ItemPackageType" value = "Truck" class="form-control" />
+                        <span asp-validation-for="ItemPackageType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="ItemName" class="control-label"></label>
                         <input asp-for="ItemName" class="form-control" />
                         <span asp-validation-for="ItemName" class="text-danger"></span>
                     </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="ItemStatus" class="control-label"></label>
-                        <input asp-for="ItemStatus" class="form-control" />
+                    <div class="form-group mb-5">
+                        <label asp-for="ItemStatus"></label><br />
+                        <select asp-for="ItemStatus" class="form-control w-100" name="ItemStatus">
+                            <option value=@string.Empty selected>Select an option</option>
+                            <option value="New">New</option>
+                            <option value="EnrichmentOngoing">Enrichment Ongoing</option>
+                            <option value="Enrichment Complete">Enrichment Complete</option>
+                            <option value="ReadyForEcom">Ready For Ecom</option>
+                            <option value="SentToEcom">Sent To Ecom</option>
+                            <option value="PublishedOnEcom">Published On Ecom</option>
+                            <option value="PublishOnEcomFailed">Publish On Ecom Failed</option>
+                            <option value="Phased Out">Phased Out</option>
+                        </select>
                         <span asp-validation-for="ItemStatus" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="ItemEngineType" class="control-label"></label>
-                        <input asp-for="ItemEngineType" class="form-control" />
+                        <span>Engine Type:   </span>
+                        <input asp-for="ItemEngineType" type="radio" value="Gasoline" />
+                        <label asp-for="ItemEngineType">Gasoline</label>
+                        <span>    </span>
+                        <input asp-for="ItemEngineType" type="radio" value="Diesel" />
+                        <label asp-for="ItemEngineType">Diesel</label>
+                        <span>    </span>
+                        <input asp-for="ItemEngineType" type="radio" value="Electric" />
+                        <label asp-for="ItemEngineType">Electric</label>
                         <span asp-validation-for="ItemEngineType" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
@@ -43,17 +65,29 @@
                         <span asp-validation-for="ItemServiceInterval" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="ItemForceSend" class="control-label"></label>
-                        <input asp-for="ItemForceSend" class="form-control" />
+                        <span>Force Send to Ecom: </span>
+                        <input asp-for="ItemForceSend" type="radio" value=@string.Empty />
+                        <label asp-for="ItemForceSend">Not Set</label>
+                        <span>    </span>
+                        <input asp-for="ItemForceSend" type="radio" value="True" />
+                        <label asp-for="ItemForceSend">True</label>
+                        <span>    </span>
+                        <input asp-for="ItemForceSend" type="radio" value="False" />
+                        <label asp-for="ItemForceSend">False</label>
                         <span asp-validation-for="ItemForceSend" class="text-danger"></span>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group" hidden>
+                        <label asp-for="ItemCreated" class="control-label"></label>
+                        <input asp-for="ItemCreated" value = "@(DateTime.Now)" class="form-control" />
+                        <span asp-validation-for="ItemCreated" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3 mt-3">
                         <label asp-for="ResourceImageFile" class="control-label"></label>
                         <input asp-for="ResourceImageFile" accept="image/*" />
                         <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <input asp-action="Create" type="submit" value="Create" class="btn btn-primary" />
                     </div>
                 </form>
             </div>
@@ -63,9 +97,10 @@
         </div>
     </div>
 
-                                            @*Consumable Tab Items Create page*@
 
-    
+    @*Consumable Tab Items Create page*@
+
+
     <div class="tab-pane fade" id="nav-consumable" role="tabpanel" aria-labelledby="nav-consumable-tab">
         <div class="row">
             <div class="mt-5 col-md-4">
@@ -76,14 +111,31 @@
                         <input asp-for="ItemName" class="form-control" />
                         <span asp-validation-for="ItemName" class="text-danger"></span>
                     </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="ItemStatus" class="control-label"></label>
-                        <input asp-for="ItemStatus" class="form-control" />
+                    <div class="form-group mb-5">
+                        <label asp-for="ItemStatus"></label><br />
+                        <select asp-for="ItemStatus" class="form-control w-100" name="ItemStatus">
+                            <option value=@string.Empty selected>Select an option</option>
+                            <option value="New">New</option>
+                            <option value="EnrichmentOngoing">Enrichment Ongoing</option>
+                            <option value="Enrichment Complete">Enrichment Complete</option>
+                            <option value="ReadyForEcom">Ready For Ecom</option>
+                            <option value="SentToEcom">Sent To Ecom</option>
+                            <option value="PublishedOnEcom">Published On Ecom</option>
+                            <option value="PublishOnEcomFailed">Publish On Ecom Failed</option>
+                            <option value="Phased Out">Phased Out</option>
+                        </select>
                         <span asp-validation-for="ItemStatus" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="ItemPackageType" class="control-label"></label>
-                        <input asp-for="ItemPackageType" class="form-control" />
+                        <span>Item Package Type: </span>
+                        <input asp-for="ItemPackageType" type="radio" value="NotSet" />
+                        <label asp-for="ItemPackageType">Not Set</label>
+                        <span>    </span>
+                        <input asp-for="ItemPackageType" type="radio" value="Single" />
+                        <label asp-for="ItemPackageType">Single</label>
+                        <span>    </span>
+                        <input asp-for="ItemPackageType" type="radio" value="Multi" />
+                        <label asp-for="ItemPackageType">Multi</label>
                         <span asp-validation-for="ItemPackageType" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
@@ -97,14 +149,32 @@
                         <span asp-validation-for="ItemNutritionalFacts" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="ItemFoodGroup" class="control-label"></label>
-                        <input asp-for="ItemFoodGroup" class="form-control" />
+                        <span>Item Food Group: </span>
+                        <input asp-for="ItemFoodGroup" type="radio" value="Fruits" />
+                        <label asp-for="ItemFoodGroup">Fruits</label>
+                        <span>    </span>
+                        <input asp-for="ItemFoodGroup" type="radio" value="Dairy" />
+                        <label asp-for="ItemFoodGroup">Dairy</label>
+                        <span>    </span>
+                        <input asp-for="ItemFoodGroup" type="radio" value="Bread" />
+                        <label asp-for="ItemFoodGroup">Bread</label>
                         <span asp-validation-for="ItemFoodGroup" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="ItemForceSend" class="control-label"></label>
-                        <input asp-for="ItemForceSend" class="form-control" />
-                        <span asp-validation-for="ItemForceSend" class="text-danger"></span>
+                        <span>Force Send to Ecom: </span>
+                        <input asp-for="ItemForceSend" type="radio" value="admin" />
+                        <label asp-for="ItemForceSend">Not Set</label>
+                        <span>    </span>
+                        <input asp-for="ItemForceSend" type="radio" value="internKund" />
+                        <label asp-for="ItemForceSend">True</label>
+                        <span>    </span>
+                        <input asp-for="ItemForceSend" type="radio" value="externKund" />
+                        <label asp-for="ItemForceSend">False</label>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="ItemCreated" class="control-label"></label>
+                        <input asp-for="ItemCreated" value = "@(DateTime.Now)" class="form-control" />
+                        <span asp-validation-for="ItemCreated" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
                         <label asp-for="ResourceImageFile" class="control-label"></label>
@@ -122,9 +192,10 @@
         </div>
     </div>
 
-                                            @*Wearable Tab Items Create page*@
 
-    
+    @*Wearable Tab Items Create page*@
+
+
     <div class="tab-pane fade" id="nav-wearable" role="tabpanel" aria-labelledby="nav-wearable-tab">
         <div class="row">
             <div class="mt-5 col-md-4">
@@ -135,9 +206,19 @@
                         <input asp-for="ItemName" class="form-control" />
                         <span asp-validation-for="ItemName" class="text-danger"></span>
                     </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="ItemStatus" class="control-label"></label>
-                        <input asp-for="ItemStatus" class="form-control" />
+                    <div class="form-group mb-5">
+                        <label asp-for="ItemStatus"></label><br />
+                        <select asp-for="ItemStatus" class="form-control w-100" name="ItemStatus">
+                            <option value=@string.Empty selected>Select an option</option>
+                            <option value="New">New</option>
+                            <option value="EnrichmentOngoing">Enrichment Ongoing</option>
+                            <option value="Enrichment Complete">Enrichment Complete</option>
+                            <option value="ReadyForEcom">Ready For Ecom</option>
+                            <option value="SentToEcom">Sent To Ecom</option>
+                            <option value="PublishedOnEcom">Published On Ecom</option>
+                            <option value="PublishOnEcomFailed">Publish On Ecom Failed</option>
+                            <option value="Phased Out">Phased Out</option>
+                        </select>
                         <span asp-validation-for="ItemStatus" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
@@ -161,9 +242,20 @@
                         <span asp-validation-for="ItemCategory" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="ItemForceSend" class="control-label"></label>
-                        <input asp-for="ItemForceSend" class="form-control" />
-                        <span asp-validation-for="ItemForceSend" class="text-danger"></span>
+                        <span>Force Send to Ecom: </span>
+                        <input asp-for="ItemForceSend" type="radio" value="admin" />
+                        <label asp-for="ItemForceSend">Not Set</label>
+                        <span>    </span>
+                        <input asp-for="ItemForceSend" type="radio" value="internKund" />
+                        <label asp-for="ItemForceSend">True</label>
+                        <span>    </span>
+                        <input asp-for="ItemForceSend" type="radio" value="externKund" />
+                        <label asp-for="ItemForceSend">False</label>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="ItemCreated" class="control-label"></label>
+                        <input asp-for="ItemCreated" value = "@(DateTime.Now)" class="form-control" />
+                        <span asp-validation-for="ItemCreated" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
                         <label asp-for="ResourceImageFile" class="control-label"></label>
