@@ -24,64 +24,27 @@
         <div class="row align-items-center">
             <div class="col-10 offset-1 col-md-4 offset-md-3">
                 
-                <dl class="row mt-5">
-                    <dt>
-                        Item Name
-                    </dt>
-                    <dd>
-                        @Model.ItemName
-                    </dd>
-                    <dt>
-                        Date of Creation
-                    </dt>
-                    <dd>
-                        @Model.ItemCreated
-                    </dd>
-                    <dt>
-                        Item Status
-                    </dt>
-                    <dd>
-                        @Model.ItemStatus
-                    </dd>
-                    <dt>
-                        Item Type
-                    </dt>
-                    <dd>
-                        @Model.ItemPackageType
-                    </dd>
-                    <dt>
-                        Engine Type
-                    </dt>
-                    <dd>
-                        @Model.ItemEngineType
-                    </dd>
-                    <dt>
-                        Service Interval
-                    </dt>
-                    <dd>
-                        @Model.ItemServiceInterval
-                    </dd>
-                    <dt>
-                        Item Retail Price
-                    </dt>
-                    <dd>
-                        @Model.ItemRetailPrice
-                    </dd>
-                    <dt>
-                        Force Send Status
-                    </dt>
-                    <dd>
-                        @Model.ItemForceSend
-                    </dd>
-                </dl>
-                <div class="row">
-                    <a asp-action="Delete" asp-route-itemName="@Model.ItemName">Delete</a>
-                </div>
+                @{
+                    if (Model.ItemPackageType == "Truck")
+                    {
+                        <partial name="\\_DetailsPartial\\_DetailsTruck" model="Model" />
+                    }
+                }
 
+                @{
+                    if (Model.ItemPackageType == "Consumable")
+                    {
+                        <partial name="\\_DetailsPartial\\_DetailsConsumable" model="Model" />
+                    }
+                }
 
-                <div>
-                    <a asp-action="Index">Back to List</a>
-                </div>
+                @{
+                    if (Model.ItemPackageType == "Wearable")
+                    {
+                        <partial name="\\_DetailsPartial\\_DetailsWearable" model="Model" />
+                    }
+                }
+                
             </div>
             <div class="col-10 offset-1 col-md-5 offset-md-0">
                 <div class="col-sm-10 mt-5">

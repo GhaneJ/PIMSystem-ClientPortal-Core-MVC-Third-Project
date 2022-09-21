@@ -17,7 +17,7 @@ namespace PIM_Dashboard.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -64,6 +64,9 @@ namespace PIM_Dashboard.Migrations
                     b.Property<string>("ItemPackageType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ItemQuantityType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double?>("ItemRetailPrice")
                         .HasColumnType("float");
 
@@ -74,6 +77,7 @@ namespace PIM_Dashboard.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProductId")

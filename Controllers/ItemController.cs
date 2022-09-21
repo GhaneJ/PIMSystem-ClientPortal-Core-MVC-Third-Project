@@ -42,58 +42,58 @@ namespace PIM_Dashboard.Controllers
         }
 
         // GET: Item/Details/5
-        public async Task<IActionResult> Details(string itemName)
+        public async Task<IActionResult> Details(Item item)
         {
             ItemViewModel clickedItem = new ItemViewModel();
-            Item item = new Item();
+            //Item item = new Item();
             Task<string> apiResponse = null;
-            if (itemName == null || _context.Items == null)
+            if (item.ItemName == null || _context.Items == null)
             {
                 return NotFound();
             }
 
-            Item itemObject = await _context.Items.Where(m => m.ItemName == itemName)
+            Item itemObject = await _context.Items.Where(m => m.ItemName == item.ItemName)
                 .FirstOrDefaultAsync();
 
-            if (itemObject.ItemStatus == "Enrichment Complete")
-            {
-                //If the client item is enriched, get the price from server API
+            //if (itemObject.ItemStatus == "Enrichment Complete")
+            //{
+            //    //If the client item is enriched, get the price from server API
 
-            if (itemObject.ItemRetailPrice == null)
-                {
-                    apiResponse = GetSelectedItemInfo(itemName);
-                    if (!string.IsNullOrEmpty(apiResponse.Result))
-                    {
-                        try
-                        {
-                            if (apiResponse.Result.Contains(itemName))
-                            {
-                                clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
-                                if (clickedItem.ItemName != null)
-                                {
-                                    itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
+            //if (itemObject.ItemRetailPrice == null)
+            //    {
+            //        apiResponse = GetSelectedItemInfo(itemName);
+            //        if (!string.IsNullOrEmpty(apiResponse.Result))
+            //        {
+            //            try
+            //            {
+            //                if (apiResponse.Result.Contains(itemName))
+            //                {
+            //                    clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
+            //                    if (clickedItem.ItemName != null)
+            //                    {
+            //                        itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
 
-                                    await Edit(itemName, itemObject.ItemRetailPrice, itemObject);
+            //                        await Edit(itemName, itemObject.ItemRetailPrice, itemObject);
 
-                                    if (itemObject == null)
-                                    {
-                                        return NotFound();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                // Report that the item does not exist in the Server database
-                            }
-                        }
-                        catch (NullReferenceException e)
-                        {
-                            Console.WriteLine("\nException Caught!");
-                            Console.WriteLine("Message :{0} ", e.Message);
-                        }
-                    }
-                }
-            }
+            //                        if (itemObject == null)
+            //                        {
+            //                            return NotFound();
+            //                        }
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    // Report that the item does not exist in the Server database
+            //                }
+            //            }
+            //            catch (NullReferenceException e)
+            //            {
+            //                Console.WriteLine("\nException Caught!");
+            //                Console.WriteLine("Message :{0} ", e.Message);
+            //            }
+            //        }
+            //    }
+            //}
             return View(itemObject);
         }
 
@@ -117,18 +117,7 @@ namespace PIM_Dashboard.Controllers
                 ModelState.AddModelError("ItemName", "ItemName already exists");
             }
 
-            ItemViewModel model = new ItemViewModel();
-
-            //if (item.ItemPackageType == "Truck")
-            //{
-            //    ModelState.Remove("ItemBaseColor");
-            //    ModelState.Remove("ItemBrandColor");
-            //    ModelState.Remove("ItemCategory");
-            //    ModelState.Remove("ItemFoodGroup");
-            //    ModelState.Remove("ItemNutritionalFacts");
-            //    ModelState.Remove("ItemPackageQuantity");
-            //    ModelState.Remove("ItemSize");
-            //}
+            ItemViewModel model = new ItemViewModel();            
 
             if (ModelState.IsValid)
             {
@@ -138,6 +127,14 @@ namespace PIM_Dashboard.Controllers
                 model.ItemEngineType = item.ItemEngineType;
                 model.ItemStatus = item.ItemStatus;
                 model.ItemForceSend = item.ItemForceSend;
+                model.ItemPackageQuantity = item.ItemPackageQuantity;
+                model.ItemRetailPrice = item.ItemRetailPrice;
+                model.ItemBrandColor = item.ItemBrandColor;
+                model.ItemBaseColor = item.ItemBaseColor;
+                model.ItemNutritionalFacts = item.ItemNutritionalFacts;
+                model.ItemCategory = item.ItemCategory;
+                model.ItemPackageType = item.ItemPackageType;
+                model.ItemSize = item.ItemSize;
 
                 if (item.ResourceImageFile != null)
                 {

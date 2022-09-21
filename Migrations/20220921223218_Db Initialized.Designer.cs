@@ -12,14 +12,14 @@ using PIM_Dashboard.Data;
 namespace PIM_Dashboard.Migrations
 {
     [DbContext(typeof(PIMDbContext))]
-    [Migration("20220916164752_Db Initialize")]
-    partial class DbInitialize
+    [Migration("20220921223218_Db Initialized")]
+    partial class DbInitialized
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -66,6 +66,9 @@ namespace PIM_Dashboard.Migrations
                     b.Property<string>("ItemPackageType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ItemQuantityType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double?>("ItemRetailPrice")
                         .HasColumnType("float");
 
@@ -76,6 +79,7 @@ namespace PIM_Dashboard.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProductId")

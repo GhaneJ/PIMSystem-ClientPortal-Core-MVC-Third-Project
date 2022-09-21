@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PIM_Dashboard.Migrations
 {
-    public partial class DbInitialize : Migration
+    public partial class DbInitialized : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,9 +35,10 @@ namespace PIM_Dashboard.Migrations
                     ItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ItemName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    ItemStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ItemRetailPrice = table.Column<double>(type: "float", nullable: true),
                     ItemPackageType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemQuantityType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ItemPackageQuantity = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ItemEngineType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ItemServiceInterval = table.Column<string>(type: "nvarchar(max)", nullable: true),

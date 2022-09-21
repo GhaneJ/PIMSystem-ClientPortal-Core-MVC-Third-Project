@@ -1,0 +1,66 @@
+﻿@model PIM_Dashboard.Models.Item
+
+<dl class="row mt-5">
+    <dt>
+        Item Name
+    </dt>
+    <dd>
+        @Model.ItemName
+    </dd>
+    <dt>
+        Date of Creation
+    </dt>
+    <dd>
+        @Model.ItemCreated
+    </dd>
+    <dt>
+        Item Status
+    </dt>
+    <dd>
+        @Model.ItemStatus
+    </dd>
+    <dt>
+        Item Type
+    </dt>
+    <dd>
+        @Model.ItemPackageType
+    </dd>
+    <dt>
+        Size
+    </dt>
+    <dd>
+        @Model.ItemSize
+    </dd>
+    <dt>
+        Brand Color
+    </dt>
+    <dd>
+        @Model.ItemBrandColor
+    </dd>
+    <dt>
+        Base Color
+    </dt>
+    <dd>
+        @Model.ItemBaseColor
+    </dd>
+    <dt>
+        Force Send Status
+    </dt>
+    <dd>
+        @Model.ItemForceSend
+    </dd>
+    <dt>
+        Retail Price
+    </dt>
+    <dd>
+        @Model.ItemRetailPrice
+    </dd>
+</dl>
+<div class="row">
+    <a asp-action="Delete" asp-route-itemName="@Model.ItemName">Delete</a>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

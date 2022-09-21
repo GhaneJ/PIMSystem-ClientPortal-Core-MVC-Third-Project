@@ -19,21 +19,50 @@ namespace PIM_Dashboard.Models
         public string ItemName { get; set; }
 
         [Required(ErrorMessage = "This field is required.")]
+
+        [DisplayName("Status")]
         public string ItemStatus { get; set; }
+
+        [DisplayName("Price")]
         public double? ItemRetailPrice { get; set; }
+
+        [DisplayName("Type")]
         public string ItemPackageType { get; set; }
+
+        [DisplayName("Quantity Type")]
+        public string ItemQuantityType { get; set; }
+
+        [DisplayName("Package Quantity")]
         public string ItemPackageQuantity { get; set; }
+
+        [DisplayName("Engine Type")]
         public string ItemEngineType { get; set; }
+
+        [DisplayName("Service internal")]
         public string ItemServiceInterval { get; set; }
+
+        [DisplayName("Brand Color")]
         public string ItemBrandColor { get; set; }
+
+        [DisplayName("Base Color")]
         public string ItemBaseColor { get; set; }
+
+        [DisplayName("Nutritional Facts")]
         public string ItemNutritionalFacts { get; set; }
+
+        [DisplayName("Food Group")]
         public string ItemFoodGroup { get; set; }
+
+        [DisplayName("Size")]
         public string ItemSize { get; set; }
+
+        [DisplayName("Category")]
         public string ItemCategory { get; set; }
+
+        [DisplayName("Force Send")]
         public string ItemForceSend { get; set; }
 
-        [DisplayName("Item Created")]
+        [DisplayName("Date of Creation")]
         public DateTime ItemCreated { get; set; }
 
         // Resources
