@@ -70,7 +70,7 @@
         <span asp-validation-for="ItemSize" class="text-danger"></span>
     </div>    
     <div class="form-group mb-3">
-        <span>Force Send    </span>
+        <span>Force Send:    </span>
         <input asp-for="ItemForceSend" type="radio" value=@string.Empty />
         <label asp-for="ItemForceSend">Not Set</label>
         <span>    </span>
@@ -80,6 +80,18 @@
         <input asp-for="ItemForceSend" type="radio" value="False" />
         <label asp-for="ItemForceSend">False</label>
         <span asp-validation-for="ItemForceSend" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <span>Category: </span>
+        <input asp-for="ItemCategory" type="radio" value="Pants" />
+        <label asp-for="ItemCategory">Pants</label>
+        <span>    </span>
+        <input asp-for="ItemCategory" type="radio" value="Shirts" />
+        <label asp-for="ItemCategory">Shirts</label>
+        <span>    </span>
+        <input asp-for="ItemCategory" type="radio" value="Underwear" />
+        <label asp-for="ItemCategory">Underwear</label>
+        <span asp-validation-for="ItemCategory" class="text-danger"></span>
     </div>
     <div class="form-group" hidden>
         <label asp-for="ItemCreated" class="control-label"></label>
