@@ -7,6 +7,11 @@
         <input asp-for="ItemPackageType" value="Wearable" class="form-control" />
         <span asp-validation-for="ItemPackageType" class="text-danger"></span>
     </div>
+    <div class="form-group" hidden>
+        <label asp-for="ItemCreated" class="control-label"></label>
+        <input asp-for="ItemCreated" value="@(DateTime.Now)" class="form-control" />
+        <span asp-validation-for="ItemCreated" class="text-danger"></span>
+    </div>
     <div class="form-group mb-3">
         <label asp-for="ItemName" class="control-label"></label>
         <input asp-for="ItemName" class="form-control" />
@@ -68,7 +73,7 @@
             <option value="XL">XL</option>
         </select>
         <span asp-validation-for="ItemSize" class="text-danger"></span>
-    </div>    
+    </div>
     <div class="form-group mb-3">
         <span>Force Send:    </span>
         <input asp-for="ItemForceSend" type="radio" value=@string.Empty />
@@ -92,11 +97,6 @@
         <input asp-for="ItemCategory" type="radio" value="Underwear" />
         <label asp-for="ItemCategory">Underwear</label>
         <span asp-validation-for="ItemCategory" class="text-danger"></span>
-    </div>
-    <div class="form-group" hidden>
-        <label asp-for="ItemCreated" class="control-label"></label>
-        <input asp-for="ItemCreated" value="@(DateTime.Now)" class="form-control" />
-        <span asp-validation-for="ItemCreated" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
         <label asp-for="ResourceImageFile" class="control-label"></label>

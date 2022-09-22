@@ -38,7 +38,7 @@ namespace PIM_Dashboard.Models
         [DisplayName("Engine Type")]
         public string ItemEngineType { get; set; }
 
-        [DisplayName("Service internal")]
+        [DisplayName("Service interval")]
         public string ItemServiceInterval { get; set; }
 
         [DisplayName("Brand Color")]
@@ -75,7 +75,7 @@ namespace PIM_Dashboard.Models
         public string ResourceImageTitle { get; set; }
 
         [NotMapped]
-        [DisplayName("Upload File")]
+        [DisplayName("Upload Image:")]
         public IFormFile ResourceImageFile { get; set; }        
         public Product Product { get; set; }        
     }

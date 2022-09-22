@@ -7,14 +7,19 @@
         <input asp-for="ItemPackageType" value="Truck" class="form-control" />
         <span asp-validation-for="ItemPackageType" class="text-danger"></span>
     </div>
+    <div class="form-group" hidden>
+        <label asp-for="ItemCreated" class="control-label"></label>
+        <input asp-for="ItemCreated" value="@(DateTime.Now)" class="form-control" />
+        <span asp-validation-for="ItemCreated" class="text-danger"></span>
+    </div>
     <div class="form-group">
         <label asp-for="ItemName" class="control-label"></label>
         <input asp-for="ItemName" class="form-control" />
         <span asp-validation-for="ItemName" class="text-danger"></span>
     </div>
-    <div class="form-group mb-5">
+    <div class="form-group mb-3">
         <label asp-for="ItemStatus"></label><br />
-        <select asp-for="ItemStatus" class="form-control w-100" name="ItemStatus">
+        <select asp-for="ItemStatus" class="form-control w-50" name="ItemStatus">
             <option value=@string.Empty selected>Select an option</option>
             <option value="New">New</option>
             <option value="EnrichmentOngoing">Enrichment Ongoing</option>
@@ -28,7 +33,7 @@
         <span asp-validation-for="ItemStatus" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
-        <span>Engine Type:   </span>
+        <span>Engine Type:   </span><br />
         <input asp-for="ItemEngineType" type="radio" value="Gasoline" />
         <label asp-for="ItemEngineType">Gasoline</label>
         <span>    </span>
@@ -41,32 +46,27 @@
     </div>
     <div class="form-group mb-3">
         <label asp-for="ItemServiceInterval" class="control-label"></label>
-        <input asp-for="ItemServiceInterval" class="form-control" />
+        <input asp-for="ItemServiceInterval" class="form-control w-25" />
         <span asp-validation-for="ItemServiceInterval" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
-        <span>Force Send to Ecom: </span>
+        <span>Force Send to Ecom: </span><br />
         <input asp-for="ItemForceSend" type="radio" value=@string.Empty />
         <label asp-for="ItemForceSend">Not Set</label>
-        <span>    </span>
+        <span>  </span>
         <input asp-for="ItemForceSend" type="radio" value="True" />
         <label asp-for="ItemForceSend">True</label>
-        <span>    </span>
+        <span>  </span>
         <input asp-for="ItemForceSend" type="radio" value="False" />
         <label asp-for="ItemForceSend">False</label>
         <span asp-validation-for="ItemForceSend" class="text-danger"></span>
     </div>
-    <div class="form-group" hidden>
-        <label asp-for="ItemCreated" class="control-label"></label>
-        <input asp-for="ItemCreated" value="@(DateTime.Now)" class="form-control" />
-        <span asp-validation-for="ItemCreated" class="text-danger"></span>
-    </div>
-    <div class="form-group mb-3 mt-3">
+    <div class="form-group mb-3">
         <label asp-for="ResourceImageFile" class="control-label"></label>
         <input asp-for="ResourceImageFile" accept="image/*" />
         <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
-        <input asp-action="Create" type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>

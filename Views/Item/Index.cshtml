@@ -4,25 +4,23 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="container mb-5">
+<div class="container">
     <form asp-controller="Item" asp-action="Index" method="get">
         <div class="mt-5">
-            <div>
-            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-3 mb-5 w-25">
+            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-3 mb-5">
                 <div class="input-group p-1">
                     <input class="form-control border-0 bg-light" type="text" placeholder="Search.." name="itemName">
                     <button type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
                 </div>
             </div>
-            </div>
 
             <div class="row">
                 @foreach (var item in Model)
                 {
-                    <div class="col-md-3">
-                        <div class="card-body">
-                            <a class="text-decoration-none text-center text-black" asp-action="Details" asp-route-itemName="@item.ItemName">
-                                <img class="rounded mx-auto d-block" src="@("~/Image/"+item.ResourceFileName)" asp-append-version="true" width="125px" height="125px"/><br /><br />
+                    <div class="col-md-3 mx-1 mb-2">
+                        <div class="card card-body align-items-center">
+                            <a class="text-decoration-none text-center text-black" asp-action="Edit" asp-route-itemName="@item.ItemName">
+                                <img class="rounded mx-auto d-block mt-3" src="@("~/Image/"+item.ResourceFileName)" asp-append-version="true" width="155px" height="125px" />
                                 @item.ItemName
                             </a>
                         </div>
