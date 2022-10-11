@@ -17,9 +17,17 @@
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ProductLifecycleStatus" class="control-label"></label>
-                <input asp-for="ProductLifecycleStatus" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="ProductLifecycleStatus"></label><br />
+                <select asp-for="ProductLifecycleStatus" class="form-control w-50" name="ItemStatus">
+                    <option value=@string.Empty selected>Select an option</option>
+                    <option value="PreProduction">Pre-production</option>
+                    <option value="PreSales">Pre-sales</option>
+                    <option value="Active">Active</option>
+                    <option value="PhaseOut">Phase-out</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Approved">Approved</option>
+                </select>
                 <span asp-validation-for="ProductLifecycleStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,7 +45,12 @@
                 <input asp-for="ProductManager" class="form-control" />
                 <span asp-validation-for="ProductManager" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
+                <label asp-for="ResourceImageFile" class="control-label"></label>
+                <input asp-for="ResourceImageFile" accept="image/*" />
+                <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -45,9 +58,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ProductIndex" class="btn btn-secondary mt-3 ml-3">Back To Products</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

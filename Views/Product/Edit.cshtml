@@ -39,6 +39,16 @@
                 <span asp-validation-for="ProductManager" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ResourceFileName" class="control-label"></label>
+                <input asp-for="ResourceFileName" class="form-control" />
+                <span asp-validation-for="ResourceFileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResourceImageTitle" class="control-label"></label>
+                <input asp-for="ResourceImageTitle" class="form-control" />
+                <span asp-validation-for="ResourceImageTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -46,9 +56,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ProductIndex" class="btn btn-secondary mt-3 ml-3">Back</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

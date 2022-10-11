@@ -38,6 +38,12 @@
         @Model.ItemPackageQuantity
     </dd>
     <dt>
+        Item Retail Price
+    </dt>
+    <dd>
+        @Model.ItemRetailPrice
+    </dd>
+    <dt>
         Force Send Status
     </dt>
     <dd>
@@ -45,10 +51,6 @@
     </dd>
 </dl>
 <div class="row">
-    <a asp-action="Delete" asp-route-itemName="@Model.ItemName">Delete</a>
-</div>
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary mt-5 w-25 mx-3">Back</a>
+    <a class="btn btn-danger mt-5 w-25" asp-action="Delete" asp-route-itemName="@Model.ItemName">Delete</a>
 </div>

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Image\" />
+    <Folder Include="Views\Shared\_ProductCRUDPartial\" />
     <Folder Include="wwwroot\vendor\choices.js\src\" />
     <Folder Include="wwwroot\vendor\choices.js\types\" />
   </ItemGroup>

@@ -153,9 +153,15 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" rel="nofollow" asp-area="" asp-controller="Item" asp-action="Create">
-                                            <img class="image-thumbnail" src="/Image/Assets/Product.png" asp-append-version="true" width="32px" height="32px" />
+                                        <a class="dropdown-item" rel="nofollow" asp-area="" asp-controller="Product" asp-action="Create">
+                                            <img class="image-thumbnail img-fluid" src="/Image/Assets/Product.png" asp-append-version="true" width="32px" height="32px" />
                                             Products
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" rel="nofollow" asp-area="" asp-controller="Resource" asp-action="Create">
+                                            <img class="img-thumbnail img-fluid" src="~/Image/Assets/Resource.png" asp-append-version="true" width="32px" height="32px">
+                                            Resources
                                         </a>
                                     </li>
                                 </ul>
@@ -191,76 +197,34 @@
                             </svg>Home
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="tables.html">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#portfolio-grid-1"> </use>
-                            </svg>Tables
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="charts.html">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#sales-up-1"> </use>
-                            </svg>Charts
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="forms.html">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#survey-1"> </use>
-                            </svg>Forms
-                        </a>
-                    </li>
+                    
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="#exampledropdownDropdown" data-bs-toggle="collapse">
                             <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                 <use xlink:href="#browser-window-1"> </use>
-                            </svg>Example dropdown
+                            </svg>Create Entities
                         </a>
                         <ul class="collapse list-unstyled " id="exampledropdownDropdown">
-                            <li><a class="sidebar-link" href="#">Page</a></li>
-                            <li><a class="sidebar-link" href="#">Page</a></li>
-                            <li><a class="sidebar-link" href="#">Page</a></li>
+                            <li>
+                                <a class="sidebar-link" asp-controller="Item" asp-action="Create">
+                                    <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Item.png" asp-append-version="true" width="32px" height="32px">
+                                    Items
+                                </a>
+                            </li>
+                            <li>
+                                <a class="sidebar-link" asp-controller="Product" asp-action="Create">
+                                    <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Product.png" asp-append-version="true" width="32px" height="32px">                                    
+                                    Products
+                                </a>
+                            </li>
+                            <li>
+                                <a class="sidebar-link" asp-controller="Resource" asp-action="Create">
+                                    <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Resource.png" asp-append-version="true" width="32px" height="32px">
+                                    Resources
+                                </a>
+                            </li>
                         </ul>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="login.html">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#disable-1"> </use>
-                            </svg>Login page
-                        </a>
-                    </li>
-                </ul><span class="text-uppercase text-white text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>
-                <ul class="list-unstyled py-4">
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#imac-screen-1"> </use>
-                            </svg>Demo
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#chart-1"> </use>
-                            </svg>Demo
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#quality-1"> </use>
-                            </svg>Demo
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#security-shield-1"> </use>
-                            </svg>Demo
-                        </a>
-                    </li>
+                    </li>                    
                 </ul>
             </nav>
             <div class="content-inner w-100">

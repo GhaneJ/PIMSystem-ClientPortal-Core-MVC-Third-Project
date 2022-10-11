@@ -9,15 +9,13 @@
                     <!-- Item -->
                     <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
                         <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-violet">
-                                <svg class="svg-icon svg-icon-sm svg-icon-heavy">
-                                    <use xlink:href="#user-1"> </use>
-                                </svg>
+                            <div class="icon flex-shrink-0 bg-transparent">
+                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Product.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
                             <div class="mx-3">
                                 <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Products</h6>
                                 <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-violet" role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div class="number"><strong class="text-lg">@Model.Products.Count</strong></div>
@@ -26,15 +24,13 @@
                     <!-- Item -->
                     <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
                         <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-red">
-                                <svg class="svg-icon svg-icon-sm svg-icon-heavy">
-                                    <use xlink:href="#survey-1"> </use>
-                                </svg>
+                            <div class="icon flex-shrink-0 bg-transparent">
+                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Item.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
                             <div class="mx-3">
                                 <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Items</h6>
                                 <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-red" role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div class="number"><strong class="text-lg">@Model.Items.Where(x => x.ItemCreated.Date == DateTime.Today.Date).Count()</strong></div>
@@ -43,35 +39,31 @@
                     <!-- Item -->
                     <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
                         <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-green">
-                                <svg class="svg-icon svg-icon-sm svg-icon-heavy">
-                                    <use xlink:href="#numbers-1"> </use>
-                                </svg>
+                            <div class="icon flex-shrink-0 bg-transparent">
+                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Resource.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
                             <div class="mx-3">
-                                <h6 class="h4 fw-light text-gray-600 mb-3">Total<br>Entities</h6>
+                                <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Resources</h6>
                                 <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-green" role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <div class="number"><strong class="text-lg">@(Model.Products.Count + Model.Items.Count)</strong></div>
+                            <div class="number"><strong class="text-lg">0</strong></div>
                         </div>
                     </div>
                     <!-- Item -->
                     <div class="col-xl-3 col-sm-6 py-4">
                         <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-orange">
-                                <svg class="svg-icon svg-icon-sm svg-icon-heavy">
-                                    <use xlink:href="#list-details-1"> </use>
-                                </svg>
+                            <div class="icon flex-shrink-0 bg-transparent">
+                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Total.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
                             <div class="mx-3">
-                                <h6 class="h4 fw-light text-gray-600 mb-3">Reserved<br>Place</h6>
+                                <h6 class="h4 fw-light text-gray-600 mb-3">Total<br>Entities</h6>
                                 <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-orange" role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <div class="number"><strong class="text-lg">50</strong></div>
+                            <div class="number"><strong class="text-lg">@(Model.Products.Count + Model.Items.Count)</strong></div>
                         </div>
                     </div>
                 </div>
@@ -81,25 +73,29 @@
 </section>
 <!-- Dashboard Header Section    -->
 <section class="pb-0">
-    <div class="container-fluid">
-        <div class="row align-items-stretch">
+    <div class="container-fluid">        
+        <div class="row justify-content-around">
             <!-- Statistics -->
             <div class="col-lg-3 col-12">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">
-                <div class="card mb-3">
+                <div class="card mb-5">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-red"><i class="fas fa-tasks"></i></div>
+                            <div class="icon flex-shrink-0 bg-transparent">
+                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Product.png" asp-append-version="true" width="64px" height="64px" />
+                            </div>
                             <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Products.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Go to Products page</small></div>
                         </div>
                     </div>
-                </div>
+                </div>                    
                 </a>
                 <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Index">
-                <div class="card mb-3">
+                <div class="card mb-5">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-green"><i class="far fa-calendar"></i></div>
+                            <div class="icon flex-shrink-0 bg-transparent">
+                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Item.png" asp-append-version="true" width="64px" height="64px" />
+                            </div>
                             <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Items.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Go to Items Page</small></div>
                         </div>
                     </div>
@@ -108,4 +104,7 @@
             </div>
         </div>
     </div>
+    <div class="row">
+            <img class="mt-3 mb-5" src="/Image/Assets/PIM-Background.jpeg" asp-append-version="true" width="155px" height="225px" />
+        </div>
 </section>

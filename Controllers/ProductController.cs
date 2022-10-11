@@ -13,6 +13,7 @@ namespace PIM_Dashboard.Controllers
     public class ProductController : Controller
     {
         private readonly PIMDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         public ProductController(PIMDbContext context)
         {
@@ -50,13 +51,27 @@ namespace PIM_Dashboard.Controllers
         }
 
         // POST: Product/Create
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductLifecycleStatus,ProductShortDescription,ProductLongDescription,ProductManager")] Product product)
+        public async Task<IActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
             {
+
+                if (product.ResourceImageFile != null)
+                {
+                    //Save image to wwwroot/Images
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(product.ResourceImageFile.FileName);
+                    string extension = Path.GetExtension(product.ResourceImageFile.FileName);
+                    product.ResourceFileName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await product.ResourceImageFile.CopyToAsync(fileStream);
+                    }
+                }
+
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -81,10 +96,9 @@ namespace PIM_Dashboard.Controllers
         }
 
         // POST: Product/Edit/5
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductLifecycleStatus,ProductShortDescription,ProductLongDescription,ProductManager")] Product product)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
             if (id != product.ProductId)
             {

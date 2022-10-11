@@ -38,7 +38,8 @@ namespace PIM_Dashboard.Controllers
             {
                 items = items.Where(s => s.ItemName.Contains(itemName));
             }
-            return View(await items.OrderByDescending(s => s.ItemCreated).ToListAsync());
+            List<Item> listOfItems = await items.OrderByDescending(s => s.ItemCreated).ToListAsync();
+            return View(listOfItems);
         }
 
         // GET: Item/Details/5
@@ -172,18 +173,18 @@ namespace PIM_Dashboard.Controllers
                 return NotFound();
             }
 
-            var apiResponse = GetSelectedItemInfo(itemName);
-            if (apiResponse.Result != null)
-            {
-                if (apiResponse.Result.Contains(itemName))
-                {
-                    ItemViewModel clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
-                    if (item.ItemRetailPrice == null)
-                    {
-                        item.ItemRetailPrice = clickedItem.ItemRetailPrice;
-                    }
-                }
-            }
+            //var apiResponse = GetSelectedItemInfo(itemName);
+            //if (apiResponse.Result != null)
+            //{
+            //    if (apiResponse.Result.Contains(itemName))
+            //    {
+            //        ItemViewModel clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
+            //        if (item.ItemRetailPrice == null)
+            //        {
+            //            item.ItemRetailPrice = clickedItem.ItemRetailPrice;
+            //        }
+            //    }
+            //}
             return View(item);
         }
 
@@ -333,10 +334,10 @@ namespace PIM_Dashboard.Controllers
             return clickedItem;
         }
 
-        public IActionResult CreateFoodTruckitemPartial()
-        {
-            List<Item> items = new List<Item>();
-            return PartialView("_CreateFoodTruckView",  items);
-        }
+        //public IActionResult CreateFoodTruckitemPartial()
+        //{
+        //    List<Item> items = new List<Item>();
+        //    return PartialView("_CreateFoodTruckView",  items);
+        //}
     }
 }

@@ -63,10 +63,11 @@
     </dd>
 </dl>
 <div class="row">
-    <a asp-action="Delete" asp-route-itemName="@Model.ItemName">Delete</a>
+    <a asp-action="Index" class="btn btn-secondary mt-3 w-25 mx-3">Back</a>
+    <a asp-action="Delete" class="btn btn-danger mt-3 w-25" asp-route-itemName="@Model.ItemName">Delete</a>    
 </div>
 
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    
 </div>
