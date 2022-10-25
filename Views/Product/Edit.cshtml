@@ -8,9 +8,10 @@
 
 <h4>Product</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductId" />
             <div class="form-group">
@@ -48,14 +49,55 @@
                 <input asp-for="ResourceImageTitle" class="form-control" />
                 <span asp-validation-for="ResourceImageTitle" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        <div class="col-md-4">
+            <h4 class="pt-5 create-title">Item image</h4>
+            <hr />
+            <div class="col-sm-10">
+                <img class="room-image" src="@("~/Image/Product/"+Model.ResourceFileName)" asp-append-version="true" width="250px" height="250px">
             </div>
-        </form>
+
+            <label class="ml-2 mt-2">
+                Change photo
+                <input type="checkbox" id="change_image" />
+            </label>
+            <div class="form-group" id="image_file">
+                <label asp-for="ResourceImageFile" class="control-label"></label>
+                <input asp-for="ResourceImageFile" accept="image/*" />
+                <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-action="ItemIndex" class="btn btn-secondary mt-3 mx-3">Back</a>
+                <input type="submit" value="Update" class="btn btn-primary mt-3" />
+            </div>
+        </div>
     </div>
-</div>
+</form>
 
-<div>
-    <a asp-action="ProductIndex" class="btn btn-secondary mt-3 ml-3">Back</a>
-</div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @{
+        <script>
+            let checkbox = document.getElementById("change_image")
+            /*let imageName = document.getElementById("image_name")*/
+            let imageFile = document.getElementById("image_file")
+
+            imageFile.style.display = "none";
+
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    /*console.log("Checkbox is checked..");*/
+                    /*imageName.style.display = "none";*/
+                    imageFile.style.display = "block";
+                } else {
+                    /*console.log("Checkbox is not checked..");*/
+                    imageFile.style.display = "none";
+                    /*imageName.style.display = "block";*/
+                }
+            });
+        </script>
+    }
+    }

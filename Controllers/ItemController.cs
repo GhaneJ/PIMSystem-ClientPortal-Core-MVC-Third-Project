@@ -47,7 +47,7 @@ namespace PIM_Dashboard.Controllers
         {
             ItemViewModel clickedItem = new ItemViewModel();
             //Item item = new Item();
-            Task<string> apiResponse = null;
+            //Task<string> apiResponse = null;
             if (item.ItemName == null || _context.Items == null)
             {
                 return NotFound();
@@ -110,7 +110,6 @@ namespace PIM_Dashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Item item)
         {
-
             bool DoesItemNameExist = _context.Items.Any
          (x => x.ItemName == item.ItemName && x.ItemId != item.ItemId);
             if (DoesItemNameExist == true)
@@ -118,7 +117,7 @@ namespace PIM_Dashboard.Controllers
                 ModelState.AddModelError("ItemName", "ItemName already exists");
             }
 
-            ItemViewModel model = new ItemViewModel();            
+            ItemViewModel model = new ItemViewModel();
 
             if (ModelState.IsValid)
             {
@@ -144,11 +143,9 @@ namespace PIM_Dashboard.Controllers
                     string fileName = Path.GetFileNameWithoutExtension(item.ResourceImageFile.FileName);
                     string extension = Path.GetExtension(item.ResourceImageFile.FileName);
                     item.ResourceFileName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
-                    {
-                        await item.ResourceImageFile.CopyToAsync(fileStream);
-                    }
+                    string path = Path.Combine(wwwRootPath + "/Image/Item/", fileName);
+                    using var fileStream = new FileStream(path, FileMode.Create);
+                    await item.ResourceImageFile.CopyToAsync(fileStream);
                 }
 
                 _context.Add(item);
@@ -162,10 +159,6 @@ namespace PIM_Dashboard.Controllers
         [HttpGet]
         public IActionResult Edit(string itemName)
         {
-            if (itemName == null)
-            {
-                return NotFound();
-            }
             ItemViewModel model = new ItemViewModel();
             var item = _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefault();
             if (item == null)
@@ -218,7 +211,7 @@ namespace PIM_Dashboard.Controllers
                         string fileName = Path.GetFileNameWithoutExtension(item.ResourceImageFile.FileName);
                         string extension = Path.GetExtension(item.ResourceImageFile.FileName);
                         item.ResourceFileName = fileName = fileName + DateTime.Now.ToString("yymmssffff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/Image/Item/", fileName);
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
                             await item.ResourceImageFile.CopyToAsync(fileStream);

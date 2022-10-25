@@ -20,7 +20,7 @@ namespace PIM_Dashboard.Models
 
         [Required(ErrorMessage = "This field is required.")]
 
-        [DisplayName("Status")]
+        [DisplayName("Item Status")]
         public string ItemStatus { get; set; }
 
         [DisplayName("Price")]

@@ -19,13 +19,22 @@ namespace PIM_Dashboard.Models
         public string ProductName { get; set; }
 
         [Column(TypeName = "nvarchar(15)")]
+        [Required(ErrorMessage = "This field is required.")]
+        [DisplayName("Product Status")]
         public string ProductLifecycleStatus { get; set; }
 
         [Column(TypeName = "nvarchar(150)")]
         public string ProductShortDescription { get; set; }
         public string ProductLongDescription { get; set; }
-        public string ProductManager { get; set; }        
+
+        [Column(TypeName = "nvarchar(50)")]
+        [Required(ErrorMessage = "Product manager must be mentioned!")]
+        [DisplayName("Product Manager")]
+        public string ProductManager { get; set; }
         public ICollection<Item> Items { get; set; }
+
+        [DisplayName("Date of Creation")]
+        public DateTime ProductCreated { get; set; }
 
         // Resources
 

@@ -19,8 +19,8 @@
                 {
                     <div class="col-md-3 mx-1 mb-2">
                         <div class="card card-body align-items-center">
-                            <a class="text-decoration-none text-center text-black" asp-action="Edit" asp-route-itemName="@product.ProductName">
-                                <img class="rounded mx-auto d-block mt-3" src="@("~/Image/Assets/"+product.ResourceFileName)" asp-append-version="true" width="155px" height="125px" />
+                            <a class="text-decoration-none text-center text-black" asp-action="Details" asp-route-productName="@product.ProductName">
+                                <img class="rounded mx-auto d-block mt-3" src="@("~/Image/Product/"+product.ResourceFileName)" asp-append-version="true" width="155px" height="125px" />
                                 @product.ProductName
                             </a>
                         </div>

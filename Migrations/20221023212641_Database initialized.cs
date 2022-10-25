@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PIM_Dashboard.Migrations
 {
-    public partial class DbInitialized : Migration
+    public partial class Databaseinitialized : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,10 +16,11 @@ namespace PIM_Dashboard.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    ProductLifecycleStatus = table.Column<string>(type: "nvarchar(15)", nullable: true),
+                    ProductLifecycleStatus = table.Column<string>(type: "nvarchar(15)", nullable: false),
                     ProductShortDescription = table.Column<string>(type: "nvarchar(150)", nullable: true),
                     ProductLongDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductManager = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductManager = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    ProductCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ResourceFileName = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     ResourceImageTitle = table.Column<string>(type: "nvarchar(50)", nullable: true)
                 },

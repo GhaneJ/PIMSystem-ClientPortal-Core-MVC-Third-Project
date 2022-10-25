@@ -1,60 +1,141 @@
 ﻿@model PIM_Dashboard.Models.Product
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Details</h1>
+<h4>Item</h4>
+<hr />
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab" data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview" aria-selected="true">Overview</button>
+        <button class="nav-link" id="nav-edit-tab" data-bs-toggle="tab" data-bs-target="#nav-edit" type="button" role="tab" aria-controls="nav-edit" aria-selected="false">Edit</button>
+        <button class="nav-link" id="nav-includes-tab" data-bs-toggle="tab" data-bs-target="#nav-includes" type="button" role="tab" aria-controls="nav-includes" aria-selected="false">Includes</button>
+        <button class="nav-link" id="nav-included-tab" data-bs-toggle="tab" data-bs-target="#nav-included" type="button" role="tab" aria-controls="nav-included" aria-selected="false">Included in</button>
+    </div>
+</nav>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductLifecycleStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductLifecycleStatus)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductShortDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductShortDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductLongDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductLongDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductManager)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductManager)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ResourceFileName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ResourceFileName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ResourceImageTitle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ResourceImageTitle)
-        </dd>
-    </dl>
+
+                                                @* Overview Tab *@
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
+        <div class="row justify-content-around">
+            <div class="col-md-4">
+                <partial name="\\_OverviewPartial\\_ProductOverviewPartial\\_ProductOverview" model="Model" />
+            </div>
+            <div class="col-md-5">
+                <div class="col-sm-10">
+                    <h4 class="pt-5 create-title">Item image</h4>
+                    <hr />
+                    <img class="room-image" src="@("~/Image/Product/"+Model.ResourceFileName)" asp-append-version="true" width="300px" height="250px" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="tab-pane fade show" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
+    <partial name="\\_ProductCRUDPartial\\_EditPartial" model="Model" />
+@*<div class="row">
+    <div class="col-10 offset-1 col-md-4 offset-md-3">
+        <h4>Item details</h4>
+        <hr />
+        <dl class="row">
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductCreated)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductCreated)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductLifecycleStatus)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductLifecycleStatus)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductShortDescription)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductShortDescription)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductLongDescription)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductLongDescription)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductManager)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProductManager)
+            </dd>
+        </dl>
+        
+        <div class="row">
+            <a asp-action="Delete" asp-route-itemName="@Model.ProductName">Delete</a>
+        </div>
+        
+    
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+            <h4 class="pt-5 create-title">Item image</h4>
+            <hr />
+            <div class="col-sm-10">
+                <img class="room-image" src="@("~/Image/Product/"+Model.ResourceFileName)" asp-append-version="true" width="250px" height="250px">
+            </div>
+
+            <label class="ml-2 mt-2">
+                Change photo
+                <input type="checkbox" id="change_image" />
+            </label>
+            <div class="form-group" id="image_file">
+                <label asp-for="ResourceImageFile" class="control-label"></label>
+                <input asp-for="ResourceImageFile" accept="image/*" />
+                <span asp-validation-for="ResourceImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-action="ItemIndex" class="btn btn-secondary mt-3 w-25 mx-3">Back</a>
+                <input type="submit" value="Update" class="btn btn-primary mt-3 w-25" />
+            </div>
+        </div>
+</div>*@
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
-    <a asp-action="ProductIndex" class="btn btn-secondary mt-3 ml-3">Back To Products</a>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @{
+        <script>
+            let checkbox = document.getElementById("change_image")
+            /*let imageName = document.getElementById("image_name")*/
+            let imageFile = document.getElementById("image_file")
+
+            imageFile.style.display = "none";
+
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    /*console.log("Checkbox is checked..");*/
+                    /*imageName.style.display = "none";*/
+                    imageFile.style.display = "block";
+                } else {
+                    /*console.log("Checkbox is not checked..");*/
+                    imageFile.style.display = "none";
+                    /*imageName.style.display = "block";*/
+                }
+            });
+        </script>
+    }
+    }

@@ -12,8 +12,8 @@ using PIM_Dashboard.Data;
 namespace PIM_Dashboard.Migrations
 {
     [DbContext(typeof(PIMDbContext))]
-    [Migration("20220921223218_Db Initialized")]
-    partial class DbInitialized
+    [Migration("20221023212641_Database initialized")]
+    partial class Databaseinitialized
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,14 +109,19 @@ namespace PIM_Dashboard.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
 
+                    b.Property<DateTime>("ProductCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ProductLifecycleStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("ProductLongDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductManager")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
