@@ -24,9 +24,7 @@ namespace PIM_Dashboard.Controllers
             _context = context;
             _hostEnvironment = hostEnvironment;
         }
-
-        //ValueTask<T> is a value type, not a reference type and because of this
-        //it will have less memory and provides better performance as compared to Task<T>.
+        
 
         // GET: Item
         public async Task<IActionResult> Index(string itemName)
@@ -47,7 +45,7 @@ namespace PIM_Dashboard.Controllers
         {
             ItemViewModel clickedItem = new ItemViewModel();
             //Item item = new Item();
-            //Task<string> apiResponse = null;
+            Task<string> apiResponse = null;
             if (item.ItemName == null || _context.Items == null)
             {
                 return NotFound();
@@ -56,45 +54,45 @@ namespace PIM_Dashboard.Controllers
             Item itemObject = await _context.Items.Where(m => m.ItemName == item.ItemName)
                 .FirstOrDefaultAsync();
 
-            //if (itemObject.ItemStatus == "Enrichment Complete")
-            //{
-            //    //If the client item is enriched, get the price from server API
+            if (itemObject.ItemStatus == "Enrichment Complete")
+            {
+                //If the client item is enriched, get the price from server API
 
-            //if (itemObject.ItemRetailPrice == null)
-            //    {
-            //        apiResponse = GetSelectedItemInfo(itemName);
-            //        if (!string.IsNullOrEmpty(apiResponse.Result))
-            //        {
-            //            try
-            //            {
-            //                if (apiResponse.Result.Contains(itemName))
-            //                {
-            //                    clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
-            //                    if (clickedItem.ItemName != null)
-            //                    {
-            //                        itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
+                if (itemObject.ItemRetailPrice == null)
+                {
+                    apiResponse = GetSelectedItemInfo(item.ItemName);
+                    if (!string.IsNullOrEmpty(apiResponse.Result))
+                    {
+                        try
+                        {
+                            if (apiResponse.Result.Contains(item.ItemName))
+                            {
+                                clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, item.ItemName);
+                                if (clickedItem.ItemName != null)
+                                {
+                                    itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
 
-            //                        await Edit(itemName, itemObject.ItemRetailPrice, itemObject);
+                                    await Edit(item.ItemName, itemObject.ItemRetailPrice, itemObject);
 
-            //                        if (itemObject == null)
-            //                        {
-            //                            return NotFound();
-            //                        }
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    // Report that the item does not exist in the Server database
-            //                }
-            //            }
-            //            catch (NullReferenceException e)
-            //            {
-            //                Console.WriteLine("\nException Caught!");
-            //                Console.WriteLine("Message :{0} ", e.Message);
-            //            }
-            //        }
-            //    }
-            //}
+                                    if (itemObject == null)
+                                    {
+                                        return NotFound();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // Report that the item does not exist in the Server database
+                            }
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            Console.WriteLine("\nException Caught!");
+                            Console.WriteLine("Message :{0} ", e.Message);
+                        }
+                    }
+                }
+            }
             return View(itemObject);
         }
 
@@ -165,19 +163,6 @@ namespace PIM_Dashboard.Controllers
             {
                 return NotFound();
             }
-
-            //var apiResponse = GetSelectedItemInfo(itemName);
-            //if (apiResponse.Result != null)
-            //{
-            //    if (apiResponse.Result.Contains(itemName))
-            //    {
-            //        ItemViewModel clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
-            //        if (item.ItemRetailPrice == null)
-            //        {
-            //            item.ItemRetailPrice = clickedItem.ItemRetailPrice;
-            //        }
-            //    }
-            //}
             return View(item);
         }
 
@@ -217,6 +202,25 @@ namespace PIM_Dashboard.Controllers
                             await item.ResourceImageFile.CopyToAsync(fileStream);
                         }
                     }
+
+
+                    var apiResponse = GetSelectedItemInfo(itemName);
+                    if (apiResponse.Result != null)
+                    {
+                        if (apiResponse.Result.Contains(itemName))
+                        {
+                            ItemViewModel clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
+                            if (item.ItemRetailPrice == null)
+                            {
+                                if (item.ItemStatus == "Enrichment Complete")
+                                {
+                                    item.ItemRetailPrice = clickedItem.ItemRetailPrice;
+                                }
+                            }
+                        }
+                    }
+
+
 
                     _context.Update(item);
                     await _context.SaveChangesAsync();
