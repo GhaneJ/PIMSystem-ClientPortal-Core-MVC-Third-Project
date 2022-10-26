@@ -84,7 +84,7 @@
                             <div class="icon flex-shrink-0 bg-transparent">
                                 <img class="image-thumbnail img-fluid" src="/Image/Assets/Product.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
-                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Products.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Go to Products page</small></div>
+                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Products.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Products page</small></div>
                         </div>
                     </div>
                 </div>                    
@@ -96,7 +96,19 @@
                             <div class="icon flex-shrink-0 bg-transparent">
                                 <img class="image-thumbnail img-fluid" src="/Image/Assets/Item.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
-                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Items.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Go to Items Page</small></div>
+                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Items.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Items Page</small></div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Channel" asp-action="Index">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="icon flex-shrink-0 bg-transparent">
+                                <img class="image-thumbnail img-fluid" src="/Image/Assets/channel.png" asp-append-version="true" width="64px" height="64px" />
+                            </div>
+                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Items.Where(x => x.ItemStatus == "PublishedOnEcom").Count()</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Channel Page</small></div>
                         </div>
                     </div>
                 </div>
