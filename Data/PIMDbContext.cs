@@ -11,5 +11,6 @@ namespace PIM_Dashboard.Data
         }
         public DbSet<Item> Items { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<PIM_Dashboard.Models.Resource> Resource { get; set; }
     }
 }

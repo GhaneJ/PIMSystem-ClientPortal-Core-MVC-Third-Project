@@ -76,7 +76,7 @@ namespace PIM_Dashboard.Models
 
         [NotMapped]
         [DisplayName("Upload Image:")]
-        public IFormFile ResourceImageFile { get; set; }        
-        public Product Product { get; set; }        
+        public IFormFile ResourceImageFile { get; set; }
+        public Product Product { get; set; }
     }
 }

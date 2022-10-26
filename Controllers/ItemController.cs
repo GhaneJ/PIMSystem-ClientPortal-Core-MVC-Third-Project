@@ -24,7 +24,7 @@ namespace PIM_Dashboard.Controllers
             _context = context;
             _hostEnvironment = hostEnvironment;
         }
-        
+
 
         // GET: Item
         public async Task<IActionResult> Index(string itemName)
@@ -41,59 +41,14 @@ namespace PIM_Dashboard.Controllers
         }
 
         // GET: Item/Details/5
-        public async Task<IActionResult> Details(Item item)
-        {
-            ItemViewModel clickedItem = new ItemViewModel();
-            //Item item = new Item();
-            Task<string> apiResponse = null;
+        public IActionResult Details(Item item)
+        {            
             if (item.ItemName == null || _context.Items == null)
             {
                 return NotFound();
             }
-
-            Item itemObject = await _context.Items.Where(m => m.ItemName == item.ItemName)
-                .FirstOrDefaultAsync();
-
-            if (itemObject.ItemStatus == "Enrichment Complete")
-            {
-                //If the client item is enriched, get the price from server API
-
-                if (itemObject.ItemRetailPrice == null)
-                {
-                    apiResponse = GetSelectedItemInfo(item.ItemName);
-                    if (!string.IsNullOrEmpty(apiResponse.Result))
-                    {
-                        try
-                        {
-                            if (apiResponse.Result.Contains(item.ItemName))
-                            {
-                                clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, item.ItemName);
-                                if (clickedItem.ItemName != null)
-                                {
-                                    itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
-
-                                    await Edit(item.ItemName, itemObject.ItemRetailPrice, itemObject);
-
-                                    if (itemObject == null)
-                                    {
-                                        return NotFound();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                // Report that the item does not exist in the Server database
-                            }
-                        }
-                        catch (NullReferenceException e)
-                        {
-                            Console.WriteLine("\nException Caught!");
-                            Console.WriteLine("Message :{0} ", e.Message);
-                        }
-                    }
-                }
-            }
-            return View(itemObject);
+            
+            return View(Details);
         }
 
 
@@ -155,14 +110,60 @@ namespace PIM_Dashboard.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(string itemName)
+        public async Task<IActionResult> Edit(string itemName)
         {
+            ItemViewModel clickedItem = new ItemViewModel();
+            Task<string> apiResponse = null;
             ItemViewModel model = new ItemViewModel();
             var item = _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefault();
             if (item == null)
             {
                 return NotFound();
             }
+
+            Item itemObject = await _context.Items.Where(m => m.ItemName == item.ItemName)
+                .FirstOrDefaultAsync();
+
+            if (itemObject.ItemStatus == "EnrichmentComplete")
+            {
+                //If the client item is enriched, get the price from server API
+
+                
+                    apiResponse = GetSelectedItemInfo(item.ItemName);
+                    if (!string.IsNullOrEmpty(apiResponse.Result))
+                    {
+                        try
+                        {
+                            if (apiResponse.Result.Contains(item.ItemName))
+                            {
+                                clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, item.ItemName);
+                                if (clickedItem.ItemName != null)
+                                {
+                                    itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
+
+                                    await Edit(item.ItemName, itemObject.ItemRetailPrice, itemObject);
+
+                                    if (itemObject == null)
+                                    {
+                                        return NotFound();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // Report that the item does not exist in the Server database
+                            }
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            Console.WriteLine("\nException Caught!");
+                            Console.WriteLine("Message :{0} ", e.Message);
+                        }
+                    }
+                }
+            
+
+
             return View(item);
         }
 
@@ -212,7 +213,7 @@ namespace PIM_Dashboard.Controllers
                             ItemViewModel clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, itemName);
                             if (item.ItemRetailPrice == null)
                             {
-                                if (item.ItemStatus == "Enrichment Complete")
+                                if (item.ItemStatus == "EnrichmentComplete")
                                 {
                                     item.ItemRetailPrice = clickedItem.ItemRetailPrice;
                                 }
@@ -266,7 +267,7 @@ namespace PIM_Dashboard.Controllers
         public async Task<IActionResult> DeleteConfirmed(string itemName)
         {
             var itemModel = await _context.Items.Where(x => x.ItemName.Contains(itemName)).FirstOrDefaultAsync();
-            
+
 
             //delete image from wwwroot/image
             try
@@ -279,10 +280,10 @@ namespace PIM_Dashboard.Controllers
             {
                 Console.WriteLine($"{e.Message}");
             }
-            
-                //delete the record
-                _context.Items.Remove(itemModel);
-                await _context.SaveChangesAsync();
+
+            //delete the record
+            _context.Items.Remove(itemModel);
+            await _context.SaveChangesAsync();
             TempData["Success"] = "The item was deleted";
 
             return RedirectToAction(nameof(Index));
@@ -313,7 +314,7 @@ namespace PIM_Dashboard.Controllers
                 {
                     Console.WriteLine("\nException Caught!");
                     Console.WriteLine("Message :{0} ", e.Message);
-                }                
+                }
                 //ViewData.Model = item;
             }
             return responseBody;
@@ -327,7 +328,7 @@ namespace PIM_Dashboard.Controllers
             {
                 items = JsonConvert.DeserializeObject<List<ItemViewModel>>(response);
                 clickedItem = items.Where(x => x.ItemName == itemName).FirstOrDefault();
-            }            
+            }
             return clickedItem;
         }
 
