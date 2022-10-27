@@ -42,13 +42,13 @@ namespace PIM_Dashboard.Controllers
 
         // GET: Item/Details/5
         public IActionResult Details(Item item)
-        {            
+        {
             if (item.ItemName == null || _context.Items == null)
             {
                 return NotFound();
             }
-            
-            return View(Details);
+
+            return View();
         }
 
 
@@ -128,42 +128,39 @@ namespace PIM_Dashboard.Controllers
             {
                 //If the client item is enriched, get the price from server API
 
-                
-                    apiResponse = GetSelectedItemInfo(item.ItemName);
-                    if (!string.IsNullOrEmpty(apiResponse.Result))
+
+                apiResponse = GetSelectedItemInfo(item.ItemName);
+                if (!string.IsNullOrEmpty(apiResponse.Result))
+                {
+                    try
                     {
-                        try
+                        if (apiResponse.Result.Contains(item.ItemName))
                         {
-                            if (apiResponse.Result.Contains(item.ItemName))
+                            clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, item.ItemName);
+                            if (clickedItem.ItemName != null)
                             {
-                                clickedItem = DeserializeAPIResponseToEntity(apiResponse.Result, item.ItemName);
-                                if (clickedItem.ItemName != null)
+                                itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
+
+                                await Edit(item.ItemName, itemObject.ItemRetailPrice, itemObject);
+
+                                if (itemObject == null)
                                 {
-                                    itemObject.ItemRetailPrice = clickedItem.ItemRetailPrice;
-
-                                    await Edit(item.ItemName, itemObject.ItemRetailPrice, itemObject);
-
-                                    if (itemObject == null)
-                                    {
-                                        return NotFound();
-                                    }
+                                    return NotFound();
                                 }
                             }
-                            else
-                            {
-                                // Report that the item does not exist in the Server database
-                            }
                         }
-                        catch (NullReferenceException e)
+                        else
                         {
-                            Console.WriteLine("\nException Caught!");
-                            Console.WriteLine("Message :{0} ", e.Message);
+                            // Report that the item does not exist in the Server database
                         }
                     }
+                    catch (NullReferenceException e)
+                    {
+                        Console.WriteLine("\nException Caught!");
+                        Console.WriteLine("Message :{0} ", e.Message);
+                    }
                 }
-            
-
-
+            }
             return View(item);
         }
 
@@ -220,9 +217,6 @@ namespace PIM_Dashboard.Controllers
                             }
                         }
                     }
-
-
-
                     _context.Update(item);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "The item was updated";
@@ -331,11 +325,5 @@ namespace PIM_Dashboard.Controllers
             }
             return clickedItem;
         }
-
-        //public IActionResult CreateFoodTruckitemPartial()
-        //{
-        //    List<Item> items = new List<Item>();
-        //    return PartialView("_CreateFoodTruckView",  items);
-        //}
     }
 }

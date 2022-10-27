@@ -23,9 +23,17 @@ namespace PIM_Dashboard.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string productName)
         {
-              return View(await _context.Products.ToListAsync());
+            var products = from i in _context.Products
+                        select i;
+
+            if (!string.IsNullOrEmpty(productName))
+            {
+                products = products.Where(s => s.ProductName.Contains(productName));
+            }
+            List<Product> listOfProducts = await products.OrderByDescending(s => s.ProductCreated).ToListAsync();
+            return View(listOfProducts);
         }
 
         // GET: Product/Details/5

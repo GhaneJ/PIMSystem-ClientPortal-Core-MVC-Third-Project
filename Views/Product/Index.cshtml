@@ -5,11 +5,11 @@
 }
 
 <div class="container">
-    <form asp-controller="Item" asp-action="ProductIndex" method="get">
-        <div class="mt-5">
-            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-3 mb-5">
+    <form asp-controller="Product" asp-action="Index" method="get">
+        <div class="mt-5 mx-5">
+            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-3 mb-5 w-75">
                 <div class="input-group p-1">
-                    <input class="form-control border-0 bg-light" type="text" placeholder="Search.." name="itemName">
+                    <input class="form-control border-0 bg-light" type="text" placeholder="Search.." name="productName">
                     <button type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
                 </div>
             </div>
