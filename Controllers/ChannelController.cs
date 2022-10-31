@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PIM_Dashboard.Data;
 using PIM_Dashboard.Models;
 
 namespace PIM_Dashboard.Controllers

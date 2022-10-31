@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PIM_Dashboard.Data;
+using PIM_Dashboard.Models;
 using PIM_Dashboard.ViewModels;
 
 namespace PIM_Dashboard.Controllers

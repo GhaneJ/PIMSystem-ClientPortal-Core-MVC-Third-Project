@@ -42,9 +42,12 @@
 <!-- Button trigger modal -->
 <div class="row">
     <a asp-action="Index" class="btn btn-secondary mt-3 w-25 mx-3">Back</a>
-    <a class="btn btn-danger mt-3 w-25" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Delete
-    </a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-danger mt-3 w-25" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Delete
+        </a>
+    }
 </div>
 
 <!-- Modal -->

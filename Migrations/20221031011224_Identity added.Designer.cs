@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PIM_Dashboard.Models;
 
@@ -11,9 +12,10 @@ using PIM_Dashboard.Models;
 namespace PIM_Dashboard.Migrations
 {
     [DbContext(typeof(PIMDbContext))]
-    partial class PIMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221031011224_Identity added")]
+    partial class Identityadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

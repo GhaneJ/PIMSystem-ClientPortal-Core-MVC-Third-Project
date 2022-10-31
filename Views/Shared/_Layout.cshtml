@@ -50,10 +50,12 @@
                             <li class="nav-item d-flex align-items-center">
                                 <a id="search" href="#"></a>
                             </li>
-                            <!-- Languages dropdown    -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link text-white dropdown-toggle d-flex align-items-center" id="languages" href="#" data-bs-toggle="dropdown" aria-expanded="false"><span class="d-none d-sm-inline-block">Create Entities</span></a>
-                                <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="languages">
+                            <!--   Entities dropdown    -->
+                            @if (User.IsInRole("Admin"))
+                            {
+                               <li class="nav-item dropdown">
+                                <a class="nav-link text-white dropdown-toggle d-flex align-items-center" id="entities" href="#" data-bs-toggle="dropdown" aria-expanded="false"><span class="d-none d-sm-inline-block">Create Entities</span></a>
+                                <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="entities">
                                     <li>
                                         <a class="dropdown-item" rel="nofollow" asp-area="" asp-controller="Item" asp-action="Create">
                                             <img class="img-thumbnail img-fluid" src="~/Image/Assets/Item.png" asp-append-version="true" width="32px" height="32px">
@@ -73,8 +75,10 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> 
+                            }                            
                         </ul>
+                        <partial name="_LoginPartial" />
                     </div>
                 </div>
             </nav>
@@ -96,34 +100,36 @@
                             </svg>Home
                         </a>
                     </li>
-                    
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#exampledropdownDropdown" data-bs-toggle="collapse">
-                            <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
-                                <use xlink:href="#browser-window-1"> </use>
-                            </svg>Create Entities
-                        </a>
-                        <ul class="collapse list-unstyled " id="exampledropdownDropdown">
-                            <li>
-                                <a class="sidebar-link" asp-controller="Item" asp-action="Create">
-                                    <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Item.png" asp-append-version="true" width="32px" height="32px">
-                                    Items
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidebar-link" asp-controller="Product" asp-action="Create">
-                                    <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Product.png" asp-append-version="true" width="32px" height="32px">                                    
-                                    Products
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidebar-link" asp-controller="Resource" asp-action="Create">
-                                    <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Resource.png" asp-append-version="true" width="32px" height="32px">
-                                    Resources
-                                </a>
-                            </li>
-                        </ul>
-                    </li>                    
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="#exampledropdownDropdown" data-bs-toggle="collapse">
+                                <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
+                                    <use xlink:href="#browser-window-1"> </use>
+                                </svg>Create Entities
+                            </a>
+                            <ul class="collapse list-unstyled " id="exampledropdownDropdown">
+                                <li>
+                                    <a class="sidebar-link" asp-controller="Item" asp-action="Create">
+                                        <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Item.png" asp-append-version="true" width="32px" height="32px">
+                                        Items
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="sidebar-link" asp-controller="Product" asp-action="Create">
+                                        <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Product.png" asp-append-version="true" width="32px" height="32px">
+                                        Products
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="sidebar-link" asp-controller="Resource" asp-action="Create">
+                                        <img class="img-thumbnail img-fluid mx-2" src="~/Image/Assets/Resource.png" asp-append-version="true" width="32px" height="32px">
+                                        Resources
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
             </nav>
             <div class="content-inner w-100">

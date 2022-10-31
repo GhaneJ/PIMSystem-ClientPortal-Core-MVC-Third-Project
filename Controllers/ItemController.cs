@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using PIM_Dashboard.Data;
 using PIM_Dashboard.Models;
 using PIM_Dashboard.ViewModels;
 
@@ -17,12 +18,14 @@ namespace PIM_Dashboard.Controllers
     {
         private readonly PIMDbContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
-        string baseURL = "https://localhost:7149/api/";
+        private readonly UserManager<IdentityUser> _userManager;
+        readonly string baseURL = "https://localhost:7149/api/";
 
-        public ItemController(PIMDbContext context, IWebHostEnvironment hostEnvironment)
+        public ItemController(PIMDbContext context, IWebHostEnvironment hostEnvironment, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
+            _userManager = userManager;
         }
 
 
@@ -53,14 +56,20 @@ namespace PIM_Dashboard.Controllers
 
 
         // GET: Item/Create
-        public IActionResult Create()
+        public ActionResult Create()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+                return View();
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST: Item/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create(Item item)
         {
             bool DoesItemNameExist = _context.Items.Any
@@ -129,7 +138,7 @@ namespace PIM_Dashboard.Controllers
                 //If the client item is enriched, get the price from server API
 
 
-                apiResponse = GetSelectedItemInfo(item.ItemName);
+                apiResponse = GetSelectedItemInfo();
                 if (!string.IsNullOrEmpty(apiResponse.Result))
                 {
                     try
@@ -174,14 +183,15 @@ namespace PIM_Dashboard.Controllers
                 return NotFound();
             }
 
-            ItemViewModel model = new ItemViewModel();
-
-            model.ItemName = item.ItemName;
-            model.ItemCreated = item.ItemCreated;
-            model.ResourceFileName = item.ResourceFileName;
-            model.ResourceImageTitle = item.ResourceImageTitle;
-            model.ItemRetailPrice = itemRetailPrice;
-            model.ResourceImageFile = item.ResourceImageFile;
+            ItemViewModel model = new ItemViewModel
+            {
+                ItemName = item.ItemName,
+                ItemCreated = item.ItemCreated,
+                ResourceFileName = item.ResourceFileName,
+                ResourceImageTitle = item.ResourceImageTitle,
+                ItemRetailPrice = itemRetailPrice,
+                ResourceImageFile = item.ResourceImageFile
+            };
 
             if (ModelState.IsValid)
             {
@@ -195,14 +205,12 @@ namespace PIM_Dashboard.Controllers
                         string extension = Path.GetExtension(item.ResourceImageFile.FileName);
                         item.ResourceFileName = fileName = fileName + DateTime.Now.ToString("yymmssffff") + extension;
                         string path = Path.Combine(wwwRootPath + "/Image/Item/", fileName);
-                        using (var fileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await item.ResourceImageFile.CopyToAsync(fileStream);
-                        }
+                        using var fileStream = new FileStream(path, FileMode.Create);
+                        await item.ResourceImageFile.CopyToAsync(fileStream);
                     }
 
 
-                    var apiResponse = GetSelectedItemInfo(itemName);
+                    var apiResponse = GetSelectedItemInfo();
                     if (apiResponse.Result != null)
                     {
                         if (apiResponse.Result.Contains(itemName))
@@ -288,9 +296,8 @@ namespace PIM_Dashboard.Controllers
             return _context.Items.Any(e => e.ItemName == itemName);
         }
 
-        public async Task<string> GetSelectedItemInfo(string itemName)
+        public async Task<string> GetSelectedItemInfo()
         {
-            HttpResponseMessage response = new HttpResponseMessage();
             string responseBody = null;
             using (var client = new HttpClient())
             {
@@ -300,7 +307,7 @@ namespace PIM_Dashboard.Controllers
 
                 try
                 {
-                    response = await client.GetAsync("Item");
+                    HttpResponseMessage response = await client.GetAsync("Item");
                     response.EnsureSuccessStatusCode();
                     responseBody = await response.Content.ReadAsStringAsync();
                 }

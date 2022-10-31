@@ -6,65 +6,85 @@
         <div class="card mb-0">
             <div class="card-body">
                 <div class="row gx-5">
-                    <!-- Item -->
+                    <!-- Product -->
                     <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
-                        <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-transparent">
-                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Product.png" asp-append-version="true" width="64px" height="64px" />
-                            </div>
-                            <div class="mx-3">
-                                <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Products</h6>
-                                <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">
+                                            <div class="mx-3">
+                                                <h5 class="h5 fw-light text-gray-600 mb-3">All Products</h5>
+                                                <div class="number text-center"><strong class="text-lg">@Model.Products.Count</strong></div>
+                                            </div>
+                                        </a>
+                                        <div class="icon flex-shrink-0 bg-transparent">
+                                            <img class="image-thumbnail img-fluid" src="/Image/Assets/Product.png" asp-append-version="true" width="64px" height="64px" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="number"><strong class="text-lg">@Model.Products.Count</strong></div>
-                        </div>
+                        
                     </div>
                     <!-- Item -->
                     <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
-                        <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-transparent">
-                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Item.png" asp-append-version="true" width="64px" height="64px" />
-                            </div>
-                            <div class="mx-3">
-                                <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Items</h6>
-                                <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Index">
+                                            <div class="mx-3">
+                                                <h5 class="h5 fw-light text-gray-600 mb-3">All Items</h5>
+                                                <div class="number text-center"><strong class="text-lg">@Model.Items.Count</strong></div>
+                                            </div>
+                                        </a>
+                                        <div class="icon flex-shrink-0 bg-transparent">
+                                            <img class="image-thumbnail img-fluid" src="/Image/Assets/Item.png" asp-append-version="true" width="64px" height="64px" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="number"><strong class="text-lg">@Model.Items.Where(x => x.ItemCreated.Date == DateTime.Today.Date).Count()</strong></div>
-                        </div>
+                        
                     </div>
-                    <!-- Item -->
+                    <!-- Channel -->
                     <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
-                        <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-transparent">
-                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Resource.png" asp-append-version="true" width="64px" height="64px" />
-                            </div>
-                            <div class="mx-3">
-                                <h6 class="h4 fw-light text-gray-600 mb-3">New<br>Resources</h6>
-                                <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Channel" asp-action="Index">
+                                            <div class="mx-3">
+                                                <h5 class="h5 fw-light text-gray-600 mb-3">Items on Web</h5>
+                                                <div class="number text-center"><strong class="text-lg">@Model.Items.Where(x => x.ItemStatus == "PublishedOnEcom").Count()</strong></div>
+                                            </div>
+                                        </a>
+                                        <div class="icon flex-shrink-0 bg-transparent">
+                                            <img class="image-thumbnail img-fluid" src="/Image/Assets/eCommerce.png" asp-append-version="true" width="64px" height="64px" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="number"><strong class="text-lg">0</strong></div>
-                        </div>
+                        
                     </div>
-                    <!-- Item -->
-                    <div class="col-xl-3 col-sm-6 py-4">
-                        <div class="d-flex align-items-center">
-                            <div class="icon flex-shrink-0 bg-transparent">
-                                <img class="image-thumbnail img-fluid" src="/Image/Assets/Total.png" asp-append-version="true" width="64px" height="64px" />
-                            </div>
-                            <div class="mx-3">
-                                <h6 class="h4 fw-light text-gray-600 mb-3">Total<br>Entities</h6>
-                                <div class="progress" style="height: 4px">
-                                    <div class="progress-bar bg-transparent" role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <!-- Total -->
+                    <div class="col-xl-3 col-sm-6 py-4 border-lg-end border-gray-200">
+                        
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <a class="nav-link text-dark">
+                                            <div class="mx-3">
+                                                <h5 class="h5 fw-light text-gray-600 mb-3">Total Entities</h5>
+                                                <div class="number text-center"><strong class="text-lg">@(Model.Products.Count + Model.Items.Count)</strong></div>
+                                            </div>
+                                        </a>
+                                        <div class="icon flex-shrink-0 bg-transparent">
+                                            <img class="image-thumbnail img-fluid" src="/Image/Assets/Total.png" asp-append-version="true" width="64px" height="64px" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="number"><strong class="text-lg">@(Model.Products.Count + Model.Items.Count)</strong></div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -73,7 +93,7 @@
 </section>
 <!-- Dashboard Header Section    -->
 <section class="pb-0">
-    <div class="container-fluid">        
+    @*<div class="container-fluid">        
         <div class="row justify-content-around">
             <!-- Statistics -->
             <div class="col-lg-3 col-12">
@@ -84,7 +104,7 @@
                             <div class="icon flex-shrink-0 bg-transparent">
                                 <img class="image-thumbnail img-fluid" src="/Image/Assets/Product.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
-                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Products.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Products page</small></div>
+                            <div class="ms-3"><small class="text-uppercase text-gray-500 small d-block lh-1">Products</small></div>
                         </div>
                     </div>
                 </div>                    
@@ -96,7 +116,7 @@
                             <div class="icon flex-shrink-0 bg-transparent">
                                 <img class="image-thumbnail img-fluid" src="/Image/Assets/Item.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
-                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Items.Count</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Items Page</small></div>
+                            <div class="ms-3"><small class="text-uppercase text-gray-500 small d-block lh-1">Items</small></div>
                         </div>
                     </div>
                 </div>
@@ -108,14 +128,14 @@
                             <div class="icon flex-shrink-0 bg-transparent">
                                 <img class="image-thumbnail img-fluid" src="/Image/Assets/channel.png" asp-append-version="true" width="64px" height="64px" />
                             </div>
-                            <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">@Model.Items.Where(x => x.ItemStatus == "PublishedOnEcom").Count()</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Channel Page</small></div>
+                            <div class="ms-3"><small class="text-uppercase text-gray-500 small d-block lh-1">Channels</small></div>
                         </div>
                     </div>
                 </div>
                 </a>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="container-fluid">
         <div class="row justify-content-around">
             <div class="row w-50">
